@@ -4,7 +4,7 @@ import BoardContainer from "./boardContainer";
 function ChartBoard() {
   return (
     <div className="w-1/2">
-      <BoardContainer>Todo</BoardContainer>
+      <BoardContainer>Chart</BoardContainer>
     </div>
   );
 }
