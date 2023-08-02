@@ -12,15 +12,22 @@ module.exports = {
       lg: "976px",
       xl: "1440px",
     },
-    colors: {
+    
+    fontFamily: {
+      sans: ["SF UI Text", "sans-serif"],
+      serif: ["Merriweather", "serif"],
+    },
+    extend: {
+      colors: {
       lightBgColor: "#D9DCDF",
       lightSecBgColor: "#AEB6BE",
-      lightFontColor: "#283541",
-      lightSecFontColor: "#81909E",
+      lightFontColor: "#2e3b47",
+      lightSecFontColor: "#5f5f5f",
       darkBgColor: "#111C3E",
-      darkSecBgColor: "#023a8f",
-      darkFontColor: "#b9c3ff",
+      darkSecBgColor: "#203553",
+      darkFontColor: "#c7cef4",
       darkSecFontColor: "#cccccc",
+      tetiaryColor: "#ffac7f",
       blue: "#1fb6ff",
       purple: "#7e5bef",
       pink: "#ff49db",
@@ -31,11 +38,6 @@ module.exports = {
       gray: "#8492a6",
       "gray-light": "#d3dce6",
     },
-    fontFamily: {
-      sans: ["SF UI Text", "sans-serif"],
-      serif: ["Merriweather", "serif"],
-    },
-    extend: {
     },
   },
   plugins: [],
