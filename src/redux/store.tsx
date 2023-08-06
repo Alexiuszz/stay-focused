@@ -3,7 +3,7 @@ import settingsReducer from "./slices/settings-slice"
 
 
 // Automatically adds the thunk middleware and the Redux DevTools extension
-const store = configureStore({
+export const store = configureStore({
   // Automatically calls `combineReducers`
   reducer: {
     settings: settingsReducer,
