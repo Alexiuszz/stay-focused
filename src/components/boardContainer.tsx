@@ -7,7 +7,7 @@ function BoardContainer({
   children,
 }: ContainerProps) {
   return (
-    <div className={`flex justify-center items-center gap-3 shrink-0 w-full h-full rounded-md shadow-md shadow-slate-800/50 bg-slate-700`}>
+    <div className={`flex justify-center items-center gap-3 shrink-0 w-full h-full rounded-md shadow-md shadow-black bg-slate-700 p-2`}>
       {children}
     </div>
   );

@@ -15,6 +15,7 @@ module.exports = {
     
     fontFamily: {
       sans: ["SF UI Text", "sans-serif"],
+      TT:["TT Norms Pro Regular, sans-serif"],
       serif: ["Merriweather", "serif"],
     },
     extend: {
