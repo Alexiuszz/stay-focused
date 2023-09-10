@@ -1,5 +1,6 @@
 import { configureStore } from '@reduxjs/toolkit'
 import settingsReducer from "./slices/settings-slice"
+import dataReducer from "./slices/data-slice"
 
 
 // Automatically adds the thunk middleware and the Redux DevTools extension
@@ -7,7 +8,7 @@ export const store = configureStore({
   // Automatically calls `combineReducers`
   reducer: {
     settings: settingsReducer,
-//     users: usersReducer
+    data: dataReducer
   }
 })
 
