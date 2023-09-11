@@ -9,3 +9,10 @@ export const streakCheck = (lastDate: Date) => {
   //return diff in daysF
   return Difference_In_Time / (1000 * 3600 * 24);
 };
+
+export const secondsToHrMins = (s: number) => {
+  let mins = Math.floor(s / 60);
+  let hrs = Math.floor(mins / 60);
+  let minsLeft = mins % 60;
+  return { hrs: hrs, mins: minsLeft };
+};

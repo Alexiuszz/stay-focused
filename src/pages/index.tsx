@@ -47,15 +47,6 @@ export default function Home() {
     });
   };
 
-  // useEffect(() => {
-  //   window.addEventListener("beforeunload", alertUser);
-  //   return () => {
-  //     window.removeEventListener("beforeunload", alertUser);
-  //   };
-  // }, []);
-  // const alertUser = (e: any) => {
-  // };
-
   useEffect(() => {
     if (isRunning) {
       dispatch(totalTimeIncrement());
@@ -87,7 +78,7 @@ export default function Home() {
             pause={pause}
             resetTimer={resetTimer}
           />
-          <Progress />
+          <Progress totalTimeToday={totalTime}/>
         </div>
         <div className="flex justify-between w-full max-w-4xl h-fit gap-4">
           <Todo />
