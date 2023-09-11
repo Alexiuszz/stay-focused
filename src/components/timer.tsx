@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect } from "react";
 import BoardContainer from "./boardContainer";
 import { padZero } from "@/helpers/utils";
 import { useTimer } from "react-timer-hook";
@@ -10,7 +10,7 @@ interface TimerProps {
   hours: number;
   seconds: number;
   isRunning: boolean;
-  startTimer: () => void;
+  startTimer: (paused?: boolean) => void;
   pause: () => void;
   resetTimer: () => void;
 }
@@ -33,7 +33,7 @@ function TimerBoard({
   time.setSeconds(time.getSeconds() + 600);
   const timeout = useTimer({
     expiryTimestamp: time,
-    onExpire: () => console.log(time.toString()),
+    onExpire: resetTimer,
     autoStart: false,
   });
 
@@ -42,7 +42,6 @@ function TimerBoard({
     pause();
   };
 
-  
   useEffect(() => {
     if (paused) {
       timeout.restart(time);
@@ -85,7 +84,7 @@ function TimerBoard({
           )}
           {!isRunning && (
             <div
-              onClick={() => startTimer()}
+              onClick={() => startTimer(paused)}
               className="flex justify-center items-center h-12 px-2  bg-slate-600 shadow-black shadow-sm rounded-lg cursor-pointer"
             >
               {paused ? "Resume" : "Start"} focus sesson

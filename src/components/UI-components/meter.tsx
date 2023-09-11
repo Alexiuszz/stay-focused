@@ -15,9 +15,6 @@ const RoundMeter = ({
   // Calculate the percentage of the value relative to the maxValue
   const percentage = (value / maxValue) * 100;
 
-  // Calculate the angle of the meter's gauge
-  const angle = (percentage / 100) * 360;
-
   // Calculate the path of the meter's gauge
   const radius = (size - strokeWidth) / 2;
   const circumference = 2 * Math.PI * radius;
@@ -38,7 +35,7 @@ const RoundMeter = ({
         cy={size / 2}
         r={radius}
         fill="transparent"
-        stroke="#0e8e41" // Gauge color
+        stroke="#1be96d" // Gauge color
         strokeWidth={strokeWidth}
         strokeDasharray={circumference}
         strokeLinecap="round"
@@ -51,7 +48,7 @@ const RoundMeter = ({
         textAnchor="middle"
         alignmentBaseline="middle"
         fontSize="24"
-        fill="#dadada" // Text color
+        fill={value < maxValue?"#dadada":"#50a264" }// Text color
         className="flex flex-col"
       >
         {value < maxValue

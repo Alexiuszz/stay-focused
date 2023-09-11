@@ -1,6 +1,6 @@
 import ChartBoard from "@/components/chartBoard";
 import Layout from "@/components/layout";
-import Progress from "@/components/progress";
+// import Progress from "@/components/progress";
 import TimerBoard from "@/components/timer";
 import Todo from "@/components/todo";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
@@ -12,9 +12,14 @@ import {
   takeBreak,
   totalTimeIncrement,
 } from "@/redux/slices/data-slice";
-import { useEffect, useState } from "react";
+import { useEffect } from "react";
 import { storeTodayData } from "@/helpers/localStorage";
 
+import dynamic from "next/dynamic";
+
+const Progress = dynamic(() => import("../components/progress"), {
+  ssr: false,
+});
 export default function Home() {
   const {
     totalSeconds,
@@ -30,8 +35,8 @@ export default function Home() {
   const sessions = useAppSelector((state) => state.data.sessions);
   const dispatch = useAppDispatch();
 
-  const startTimer = () => {
-    dispatch(incrementSession());
+  const startTimer = (paused: boolean = false) => {
+    !paused && dispatch(incrementSession());
     dispatch(takeBreak(false));
     start();
   };
@@ -78,7 +83,7 @@ export default function Home() {
             pause={pause}
             resetTimer={resetTimer}
           />
-          <Progress totalTimeToday={totalTime}/>
+          <Progress totalTimeToday={totalTime} />
         </div>
         <div className="flex justify-between w-full max-w-4xl h-fit gap-4">
           <Todo />
