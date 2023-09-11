@@ -1,13 +1,19 @@
 import ChartBoard from "@/components/chartBoard";
 import Layout from "@/components/layout";
-import NavBar from "@/components/nav";
 import Progress from "@/components/progress";
-import SidePanel from "@/components/side-panel";
 import TimerBoard from "@/components/timer";
 import Todo from "@/components/todo";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faStarOfLife } from "@fortawesome/free-solid-svg-icons";
 import { useStopwatch } from "react-timer-hook";
+import { useAppDispatch, useAppSelector } from "@/redux/hooks";
+import {
+  incrementSession,
+  takeBreak,
+  totalTimeIncrement,
+} from "@/redux/slices/data-slice";
+import { useEffect, useState } from "react";
+import { storeTodayData } from "@/helpers/localStorage";
 
 export default function Home() {
   const {
@@ -20,6 +26,48 @@ export default function Home() {
     pause,
     reset,
   } = useStopwatch({ autoStart: false });
+  const totalTime = useAppSelector((state) => state.data.totalTime);
+  const sessions = useAppSelector((state) => state.data.sessions);
+  const dispatch = useAppDispatch();
+
+  const startTimer = () => {
+    dispatch(incrementSession());
+    dispatch(takeBreak(false));
+    start();
+  };
+
+  const resetTimer = () => {
+    dispatch(takeBreak(false));
+    reset(new Date(0), false);
+    storeTodayData({
+      totalTime: totalTime,
+      sessions: sessions,
+      currStreak: 0,
+      bestStreak: 0,
+    });
+  };
+
+  // useEffect(() => {
+  //   window.addEventListener("beforeunload", alertUser);
+  //   return () => {
+  //     window.removeEventListener("beforeunload", alertUser);
+  //   };
+  // }, []);
+  // const alertUser = (e: any) => {
+  // };
+
+  useEffect(() => {
+    if (isRunning) {
+      dispatch(totalTimeIncrement());
+      storeTodayData({
+        totalTime: totalTime,
+        sessions: sessions,
+        currStreak: 0,
+        bestStreak: 0,
+      });
+    }
+  }, [seconds]);
+
   return (
     <Layout page="home">
       <section className="X-main mr-0 w-3/4 flex flex-col gap-4">
@@ -35,9 +83,9 @@ export default function Home() {
             minutes={minutes}
             seconds={seconds}
             isRunning={isRunning}
-            start={start}
+            startTimer={startTimer}
             pause={pause}
-            reset={reset}
+            resetTimer={resetTimer}
           />
           <Progress />
         </div>

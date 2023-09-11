@@ -1,22 +1,21 @@
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
 import type { RootState } from "../store";
+import { getTodayData } from '../../helpers/localStorage';
 
 // Define a type for the slice state
 // Times are in minutes
-interface DataState {
+export interface DataState {
   currTime: number;
   totalTime: number;
   sessions: number;
+  currStreak: number;
+  bestStreak: number;
   paused: boolean;
 }
 
+// const 
 // Define the initial state using that type
-const initialState: DataState = {
-  currTime: 0,
-  totalTime: 0,
-  paused: false,
-  sessions: 0,
-};
+const initialState: DataState = getTodayData() as DataState;
 
 export const dataSlice = createSlice({
   name: "data",
@@ -26,7 +25,7 @@ export const dataSlice = createSlice({
     currTimeIncrement: (state) => {
       state.currTime += 1;
     },
-    totalTimeIncrement: (state) => {
+    totalTimeIncrement: (state ) => {
       state.totalTime += 1;
     },
     currTimeReset: (state) => {
@@ -45,6 +44,15 @@ export const dataSlice = createSlice({
     takeBreak: (state, action: PayloadAction<boolean>) => {
       state.paused = action.payload;
     },
+    incrementCurrStreak: (state) => {
+      state.currStreak += 1;
+    },
+    resetStreak: (state) => {
+      state.currStreak = 0;
+    },
+    setBestStreak: (state) => {
+      state.currStreak > state.bestStreak && state.currStreak;
+    },
   },
 });
 
@@ -56,6 +64,9 @@ export const {
   incrementSession,
   resetSession,
   takeBreak,
+  incrementCurrStreak,
+  resetStreak,
+  setBestStreak,
 } = dataSlice.actions;
 
 // Other code such as selectors can use the imported `RootState` type
@@ -63,5 +74,7 @@ export const currTime = (state: RootState) => state.data.currTime;
 export const totalTime = (state: RootState) => state.data.totalTime;
 export const sessions = (state: RootState) => state.data.sessions;
 export const paused = (state: RootState) => state.data.paused;
+export const currStreak = (state: RootState) => state.data.currStreak;
+export const bestStreak = (state: RootState) => state.data.bestStreak;
 
 export default dataSlice.reducer;

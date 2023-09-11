@@ -7,35 +7,22 @@ import { getUserSettings } from "@/helpers/localStorage";
 export interface SettingsState {
   dailyGoal: number;
   breakDuration: number;
-  numberOfBreaks: number;
-  userName: string | null;
+  userName: string;
   includeWeekend: boolean;
   offDays: string[];
   skipBreaks: boolean;
 }
 
+var userSettings = getUserSettings();
+
 // Define the initial state using that type
-const initialState: SettingsState =
-  getUserSettings() === JSON.parse(JSON.stringify(""))
-    ? {
-        dailyGoal: 60,
-        breakDuration: 60,
-        numberOfBreaks: 1,
-        userName: null,
-        includeWeekend: false,
-        offDays: [],
-        skipBreaks: false,
-      }
-    : getUserSettings();
+const initialState: SettingsState = userSettings as SettingsState;
 
 export const settingsSlice = createSlice({
   name: "settings",
   // `createSlice` will infer the state type from the `initialState` argument
   initialState,
   reducers: {
-    //     increment: (state) => {
-    //       state.value += 1;
-    //     },
     // Use the PayloadAction type to declare the contents of `action.payload`
     setDailyGoal: (state, action: PayloadAction<number>) => {
       state.dailyGoal = action.payload;

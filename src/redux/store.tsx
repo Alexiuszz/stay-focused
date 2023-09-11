@@ -1,4 +1,4 @@
-import { configureStore } from '@reduxjs/toolkit'
+import { configureStore, getDefaultMiddleware } from '@reduxjs/toolkit'
 import settingsReducer from "./slices/settings-slice"
 import dataReducer from "./slices/data-slice"
 
@@ -9,7 +9,7 @@ export const store = configureStore({
   reducer: {
     settings: settingsReducer,
     data: dataReducer
-  }
+  },
 })
 
 // Infer the `RootState` and `AppDispatch` types from the store itself

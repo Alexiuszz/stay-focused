@@ -10,14 +10,14 @@ interface TimerProps {
   hours: number;
   seconds: number;
   isRunning: boolean;
-  start: () => void;
+  startTimer: () => void;
   pause: () => void;
-  reset: (offset: Date, autoStart: boolean) => void;
+  resetTimer: () => void;
 }
 function TimerBoard({
-  start,
+  startTimer,
   pause,
-  reset,
+  resetTimer,
   hours,
   minutes,
   seconds,
@@ -41,15 +41,8 @@ function TimerBoard({
     dispatch(takeBreak(true));
     pause();
   };
-  const resetTimer = () => {
-    dispatch(takeBreak(false));
-    reset(new Date(0), false);
-  };
-  const startTimer = () => {
-    dispatch(takeBreak(false));
-    start();
-  };
 
+  
   useEffect(() => {
     if (paused) {
       timeout.restart(time);
