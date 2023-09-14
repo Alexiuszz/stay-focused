@@ -11,6 +11,7 @@ import {
   currStreak,
   incrementCurrStreak,
   incrementSession,
+  resetStreak,
   setBestStreak,
   takeBreak,
   totalTimeIncrement,
@@ -23,6 +24,7 @@ import {
 } from "@/helpers/localStorage";
 
 import dynamic from "next/dynamic";
+import { streakEnded } from "@/helpers/utils";
 
 const Progress = dynamic(() => import("../components/progress"), {
   ssr: false,
@@ -45,8 +47,6 @@ export default function Home() {
     start();
     if (sessions < 1) {
       dispatch(incrementCurrStreak());
-      if (currStreakVal > bestStreakVal)
-        dispatch(setBestStreak(currStreakVal));
     }
   };
 
@@ -67,12 +67,12 @@ export default function Home() {
     let data = latestUserData();
 
     if (data.totalTime > 1) {
-      dispatch(setBestStreak(data.bestStreak));
+      streakEnded(new Date(data.key))
+        ? dispatch(resetStreak())
+        : dispatch(setBestStreak(data.bestStreak));
       storeLatest();
     }
   }, []);
-
-  useEffect(() => {}, []);
 
   useEffect(() => {
     if (isRunning) {
