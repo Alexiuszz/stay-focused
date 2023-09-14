@@ -1,6 +1,6 @@
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
 import type { RootState } from "../store";
-import { getTodayData } from '../../helpers/localStorage';
+import { getTodayData } from "../../helpers/localStorage";
 
 // Define a type for the slice state
 // Times are in minutes
@@ -13,7 +13,7 @@ export interface DataState {
   paused: boolean;
 }
 
-// const 
+// const
 // Define the initial state using that type
 const initialState: DataState = getTodayData() as DataState;
 
@@ -25,7 +25,7 @@ export const dataSlice = createSlice({
     currTimeIncrement: (state) => {
       state.currTime += 1;
     },
-    totalTimeIncrement: (state ) => {
+    totalTimeIncrement: (state) => {
       state.totalTime += 1;
     },
     currTimeReset: (state) => {
@@ -40,18 +40,22 @@ export const dataSlice = createSlice({
     resetSession: (state) => {
       state.sessions = 0;
     },
-    //     // Use the PayloadAction type to declare the contents of `action.payload`
+    // Use the PayloadAction type to declare the contents of `action.payload`
     takeBreak: (state, action: PayloadAction<boolean>) => {
       state.paused = action.payload;
     },
     incrementCurrStreak: (state) => {
       state.currStreak += 1;
+      state.bestStreak =
+        state.currStreak  > state.bestStreak
+          ? state.currStreak 
+          : state.bestStreak;
     },
     resetStreak: (state) => {
       state.currStreak = 0;
     },
-    setBestStreak: (state) => {
-      state.currStreak > state.bestStreak && state.currStreak;
+    setBestStreak: (state, action: PayloadAction<number>) => {
+      state.bestStreak = action.payload;
     },
   },
 });

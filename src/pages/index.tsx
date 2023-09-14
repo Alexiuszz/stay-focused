@@ -1,6 +1,5 @@
 import ChartBoard from "@/components/chartBoard";
 import Layout from "@/components/layout";
-// import Progress from "@/components/progress";
 import TimerBoard from "@/components/timer";
 import Todo from "@/components/todo";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
@@ -8,37 +7,47 @@ import { faStarOfLife } from "@fortawesome/free-solid-svg-icons";
 import { useStopwatch } from "react-timer-hook";
 import { useAppDispatch, useAppSelector } from "@/redux/hooks";
 import {
+  bestStreak,
+  currStreak,
+  incrementCurrStreak,
   incrementSession,
+  setBestStreak,
   takeBreak,
   totalTimeIncrement,
 } from "@/redux/slices/data-slice";
 import { useEffect } from "react";
-import { storeTodayData } from "@/helpers/localStorage";
+import {
+  latestUserData,
+  storeLatest,
+  storeTodayData,
+} from "@/helpers/localStorage";
 
 import dynamic from "next/dynamic";
 
 const Progress = dynamic(() => import("../components/progress"), {
   ssr: false,
 });
+
 export default function Home() {
-  const {
-    totalSeconds,
-    minutes,
-    hours,
-    seconds,
-    isRunning,
-    start,
-    pause,
-    reset,
-  } = useStopwatch({ autoStart: false });
+  const { minutes, hours, seconds, isRunning, start, pause, reset } =
+    useStopwatch({ autoStart: false });
+
   const totalTime = useAppSelector((state) => state.data.totalTime);
   const sessions = useAppSelector((state) => state.data.sessions);
+  const currStreakVal = useAppSelector(currStreak);
+  const bestStreakVal = useAppSelector(bestStreak);
+
   const dispatch = useAppDispatch();
 
   const startTimer = (paused: boolean = false) => {
     !paused && dispatch(incrementSession());
     dispatch(takeBreak(false));
     start();
+    if (sessions < 1) {
+      dispatch(incrementCurrStreak());
+      if (currStreakVal > bestStreakVal)
+        dispatch(setBestStreak(currStreakVal));
+    }
   };
 
   const resetTimer = () => {
@@ -47,10 +56,23 @@ export default function Home() {
     storeTodayData({
       totalTime: totalTime,
       sessions: sessions,
-      currStreak: 0,
-      bestStreak: 0,
+      currStreak: currStreakVal,
+      bestStreak: bestStreakVal,
     });
   };
+
+  //store latest in temp storage
+  //set best streak from latest data
+  useEffect(() => {
+    let data = latestUserData();
+
+    if (data.totalTime > 1) {
+      dispatch(setBestStreak(data.bestStreak));
+      storeLatest();
+    }
+  }, []);
+
+  useEffect(() => {}, []);
 
   useEffect(() => {
     if (isRunning) {
@@ -58,8 +80,8 @@ export default function Home() {
       storeTodayData({
         totalTime: totalTime,
         sessions: sessions,
-        currStreak: 0,
-        bestStreak: 0,
+        currStreak: currStreakVal,
+        bestStreak: bestStreakVal,
       });
     }
   }, [seconds]);

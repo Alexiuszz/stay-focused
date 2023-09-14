@@ -1,22 +1,23 @@
 import { SettingsState } from "@/redux/slices/settings-slice";
 import ls from "localstorage-slim";
+import { secondsLeftToday } from "./utils";
+import { DataState } from "@/redux/slices/data-slice";
 
 var today = new Date();
-today.setSeconds(0);
-today.setHours(0);
-today.setMinutes(0);
+today.setHours(0, 0, 0);
+
 var todayKey: string = "FocusedData(" + today.toDateString() + ")";
 export const latestData: string = "FocusedData(latestData)";
-
+export const tempLatest: string = "FocusedData(TempLatest)";
 export const storeUserSettings = (
   newSettings: SettingsState
 ): void => {
-  ls.set("settings", newSettings);
+  ls.set("Focused(settings)", newSettings);
 };
 
 export const getUserSettings = () => {
   if (typeof window !== "undefined") {
-    let storedSettings = ls.get("settings");
+    let storedSettings = ls.get("Focused(settings)");
     if (storedSettings) return storedSettings;
     else {
       storeUserSettings({
@@ -47,14 +48,27 @@ export const getUserSettings = () => {
   };
 };
 
-interface DataState {
+interface StorageDataType {
   totalTime: number;
   sessions: number;
   currStreak: number;
   bestStreak: number;
 }
-
-export const storeTodayData = (data: DataState): void => {
+const initialData: DataState = {
+  currTime: 0,
+  totalTime: 0,
+  paused: false,
+  sessions: 0,
+  currStreak: 0,
+  bestStreak: 0,
+};
+const initStorageData = {
+  totalTime: 0,
+  sessions: 0,
+  currStreak: 0,
+  bestStreak: 0,
+};
+export const storeTodayData = (data: StorageDataType): void => {
   let newData = {
     ...data,
     key: todayKey,
@@ -66,10 +80,20 @@ export const storeTodayData = (data: DataState): void => {
   ls.set(latestData, newData);
 };
 
-export const getTodayData = () => {
+export const storeLatest = (): void => {
+  let data = ls.get(tempLatest);
+  if (!data) {
+    ls.set(tempLatest, ls.get(latestData), {
+      ttl: secondsLeftToday(),
+    });
+  }
+};
+
+export const getTodayData = (): DataState => {
   if (typeof window !== "undefined") {
-    let data = ls.get(todayKey);
-    if (data) return { ...data, paused: false, currTime: 0 };
+    let data: StorageDataType = ls.get(todayKey) || initStorageData;
+    if (ls.get(todayKey))
+      return { ...data, paused: false, currTime: 0 };
   }
   return {
     currTime: 0,
@@ -80,8 +104,15 @@ export const getTodayData = () => {
     bestStreak: 0,
   };
 };
-export const latestUserData = () => {
-  let data =
-    (typeof window !== "undefined" && ls.get(latestData)) || {};
+export const latestUserData = (): StorageDataType => {
+  let data: StorageDataType =
+    (typeof window !== "undefined" && ls.get(latestData)) ||
+    initStorageData;
+  return data;
+};
+export const GetLatestTempData = (): StorageDataType => {
+  let data: StorageDataType =
+    (typeof window !== "undefined" && ls.get(tempLatest)) ||
+    initStorageData;
   return data;
 };

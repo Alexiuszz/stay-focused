@@ -1,6 +1,6 @@
 export const padZero = (x: number) => (x < 10 ? "0" + x : x);
 
-export const streakCheck = (lastDate: Date) => {
+export const streakCheck = (lastDate: Date): number => {
   const today = new Date();
   lastDate.setTime(0);
   today.setTime(0);
@@ -15,4 +15,12 @@ export const secondsToHrMins = (s: number) => {
   let hrs = Math.floor(mins / 60);
   let minsLeft = mins % 60;
   return { hrs: hrs, mins: minsLeft };
+};
+
+export const secondsLeftToday = (): number => {
+  const now = new Date();
+  const midnight = new Date();
+  midnight.setHours(23, 59, 59);
+
+  return midnight.getTime() - now.getTime() / 1000;
 };

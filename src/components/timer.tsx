@@ -14,6 +14,7 @@ interface TimerProps {
   pause: () => void;
   resetTimer: () => void;
 }
+
 function TimerBoard({
   startTimer,
   pause,
