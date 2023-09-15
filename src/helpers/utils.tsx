@@ -21,6 +21,6 @@ export const secondsLeftToday = (): number => {
   const now = new Date();
   const midnight = new Date();
   midnight.setHours(23, 59, 59);
-
-  return midnight.getTime() - now.getTime() / 1000;
+ 
+  return( midnight.getTime() - now.getTime()) / 1000;
 };

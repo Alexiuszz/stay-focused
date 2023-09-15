@@ -24,7 +24,7 @@ import {
 } from "@/helpers/localStorage";
 
 import dynamic from "next/dynamic";
-import { streakEnded } from "@/helpers/utils";
+import {  streakEnded } from "@/helpers/utils";
 
 const Progress = dynamic(() => import("../components/progress"), {
   ssr: false,
