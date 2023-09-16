@@ -24,7 +24,8 @@ import {
 } from "@/helpers/localStorage";
 
 import dynamic from "next/dynamic";
-import {  streakEnded } from "@/helpers/utils";
+import { streakEnded } from "@/helpers/utils";
+import { initStorageData } from "../helpers/localStorage";
 
 const Progress = dynamic(() => import("../components/progress"), {
   ssr: false,
@@ -65,14 +66,21 @@ export default function Home() {
   //set best streak from latest data
   useEffect(() => {
     let data = latestUserData();
-
-    if (data.totalTime > 1) {
-      streakEnded(new Date(data.key))
-        ? dispatch(resetStreak())
-        : dispatch(setBestStreak(data.bestStreak));
-      storeLatest();
+    if (data.key !== new Date().toDateString()) {
+      if (data.totalTime < 1) {
+        streakEnded(new Date(data.key)) && dispatch(resetStreak());
+        dispatch(setBestStreak(data.bestStreak));
+        storeLatest();
+      }
     }
   }, []);
+
+  useEffect(() => {
+    let data = latestUserData();
+    if (data.key !== new Date().toDateString()) {
+      storeTodayData(initStorageData);
+    }
+  });
 
   useEffect(() => {
     if (isRunning) {

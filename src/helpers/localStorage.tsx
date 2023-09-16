@@ -6,7 +6,7 @@ import { DataState } from "@/redux/slices/data-slice";
 var today = new Date();
 today.setHours(0, 0, 0);
 
-var todayKey: string = "FocusedData(" + today.toDateString() + ")";
+var todayKey = "FocusedData(" + today.toDateString() + ")";
 export const latestData: string = "FocusedData(latestData)";
 export const tempLatest: string = "FocusedData(TempLatest)";
 export const storeUserSettings = (
@@ -53,7 +53,9 @@ interface StorageDataType {
   sessions: number;
   currStreak: number;
   bestStreak: number;
+  key?:string
 }
+
 interface StorageDataReturnType {
   totalTime: number;
   sessions: number;
@@ -69,7 +71,7 @@ const initialData: DataState = {
   currStreak: 0,
   bestStreak: 0,
 };
-const initStorageData = {
+export const initStorageData = {
   totalTime: 0,
   sessions: 0,
   currStreak: 0,
@@ -79,7 +81,7 @@ const initStorageData = {
 export const storeTodayData = (data: StorageDataType): void => {
   let newData = {
     ...data,
-    key: todayKey,
+    key: today.toDateString(),
     expiry: new Date(
       today.getTime() + 3600 * 24 * 7 * 1000
     ).toDateString(),
