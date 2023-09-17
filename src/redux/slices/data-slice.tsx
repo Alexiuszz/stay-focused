@@ -44,11 +44,14 @@ export const dataSlice = createSlice({
     takeBreak: (state, action: PayloadAction<boolean>) => {
       state.paused = action.payload;
     },
+    setCurrStreak: (state, action: PayloadAction<number>) => {
+      state.currStreak = action.payload;
+    },
     incrementCurrStreak: (state) => {
       state.currStreak += 1;
       state.bestStreak =
-        state.currStreak  > state.bestStreak
-          ? state.currStreak 
+        state.currStreak > state.bestStreak
+          ? state.currStreak
           : state.bestStreak;
     },
     resetStreak: (state) => {
@@ -68,6 +71,7 @@ export const {
   incrementSession,
   resetSession,
   takeBreak,
+  setCurrStreak,
   incrementCurrStreak,
   resetStreak,
   setBestStreak,

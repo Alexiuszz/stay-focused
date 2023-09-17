@@ -13,6 +13,7 @@ import {
   incrementSession,
   resetStreak,
   setBestStreak,
+  setCurrStreak,
   takeBreak,
   totalTimeIncrement,
 } from "@/redux/slices/data-slice";
@@ -67,8 +68,10 @@ export default function Home() {
   useEffect(() => {
     let data = latestUserData();
     if (data.key !== new Date().toDateString()) {
-      if (data.totalTime < 1) {
-        streakEnded(new Date(data.key)) && dispatch(resetStreak());
+      if (data.totalTime > 1) {
+        streakEnded(new Date(data.key))
+          ? dispatch(resetStreak())
+          : dispatch(setCurrStreak(data.currStreak));
         dispatch(setBestStreak(data.bestStreak));
         storeLatest();
       }
