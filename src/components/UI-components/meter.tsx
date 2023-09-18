@@ -30,7 +30,7 @@ const RoundMeter = ({
         stroke="#64748b" // Background color
         strokeWidth={strokeWidth}
       />
-      {percentage > 5 && (
+      {percentage > 1 && (
         <circle
           cx={size / 2}
           cy={size / 2}

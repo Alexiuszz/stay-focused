@@ -2,7 +2,7 @@ import { getTodos } from "@/storage/todoStorage";
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
 
 export interface TodoType {
-  createdAt: Date;
+  createdAt: string;
   task: string;
   key: string;
   completed: boolean;

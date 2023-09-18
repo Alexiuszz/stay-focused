@@ -1,13 +1,7 @@
 export const padZero = (x: number) => (x < 10 ? "0" + x : x);
 
 export const streakEnded = (lastDate: Date): boolean => {
-  const today = new Date();
-  lastDate.setTime(0);
-  today.setTime(0);
-  // To calculate the time difference of two dates
-  let Difference_In_Time = today.getTime() - lastDate.getTime();
-  //return diff in daysF
-  return Difference_In_Time / (1000 * 3600 * 24) > 1;
+  return differenceInDays(new Date(), lastDate) > 1;
 };
 
 export const secondsToHrMins = (s: number) => {
@@ -21,6 +15,18 @@ export const secondsLeftToday = (): number => {
   const now = new Date();
   const midnight = new Date();
   midnight.setHours(23, 59, 59);
- 
-  return( midnight.getTime() - now.getTime()) / 1000;
+
+  return (midnight.getTime() - now.getTime()) / 1000;
 };
+
+export const differenceInDays = (day1: Date, day2: Date): number => {
+  day2.setHours(0);
+  day1.setHours(0);
+  console.log(day1, day2);
+  // To calculate the time difference of two dates
+  let Difference_In_Time = day2.getTime() - day1.getTime();
+  //return diff in daysF
+  return Math.floor(Difference_In_Time / (1000 * 3600 * 24));
+};
+
+

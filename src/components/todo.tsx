@@ -30,7 +30,7 @@ function Todo() {
         key: todos.length.toString(),
         completed: false,
         task: newTodo,
-        createdAt: new Date(),
+        createdAt: new Date().toString(),
       })
     );
     setNewTodo("");
@@ -59,23 +59,41 @@ function Todo() {
             <FontAwesomeIcon icon={faPlus} />
           </div>
         </div>
-        {todos.map((todo, i) => (
-          <div className="flex items-end justify-between w-11/12">
-            {!todo.completed ? (
-              <p>{todo.task}</p>
-            ) : (
-              <p className="text-slate-500 line-through">
-                {todo.task}
-              </p>
-            )}
-            <input
-              type="checkbox"
-              name="check"
-              onChange={(e) => toggleTodo(e, todo.key)}
-              checked={todo.completed}
-            />
-          </div>
-        ))}
+        {todos.map((todo, i) => {
+          return (
+            !todo.completed && (
+              <div className="flex items-end justify-between w-11/12"  key={i}>
+                <p>{todo.task}</p>
+                <input
+                  type="checkbox"
+                  name="check"
+                  onChange={(e) => toggleTodo(e, todo.key)}
+                  checked={todo.completed}
+                  className="rounded w-4 h-4"
+                />
+              </div>
+            )
+          );
+        })}
+        <div className="w-full h-px bg-white" />
+        {todos.map((todo, i) => {
+          return (
+            todo.completed && (
+              <div className="flex items-end justify-between w-11/12" key={i}>
+                <p className="text-slate-500 line-through">
+                  {todo.task}
+                </p>
+                <input
+                  type="checkbox"
+                  name="check"
+                  onChange={(e) => toggleTodo(e, todo.key)}
+                  checked={todo.completed}
+                  className="rounded w-4 h-4"
+                />
+              </div>
+            )
+          );
+        })}
       </BoardContainer>
     </div>
   );

@@ -19,14 +19,16 @@ import {
 } from "@/redux/slices/data-slice";
 import { useEffect } from "react";
 import {
+  GetLatestTempData,
   latestUserData,
   storeLatest,
   storeTodayData,
 } from "@/storage/dataStorage";
 
 import dynamic from "next/dynamic";
-import { streakEnded } from "@/helpers/utils";
+import { differenceInDays, streakEnded } from "@/helpers/utils";
 import { initStorageData } from "../storage/dataStorage";
+import { difference } from "next/dist/build/utils";
 
 const Progress = dynamic(() => import("../components/progress"), {
   ssr: false,
@@ -79,7 +81,19 @@ export default function Home() {
           : dispatch(setCurrStreak(data.currStreak));
         dispatch(setBestStreak(data.bestStreak));
         storeLatest();
+        return;
       }
+    }
+    let tempData = GetLatestTempData();
+    let diff = differenceInDays(new Date(tempData.key), new Date());
+    console.log(diff);
+    if (
+      tempData.totalTime > 0 &&
+      diff === 1 &&
+      data.currStreak < tempData.currStreak
+    ) {
+      dispatch(setCurrStreak(tempData.currStreak));
+      dispatch(setBestStreak(tempData.bestStreak));
     }
   }, []);
 
