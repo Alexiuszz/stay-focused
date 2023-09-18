@@ -71,14 +71,14 @@ function TimerBoard({
           <div className="flex flex-col justify-center items-center my-4 w-52 aspect-[3/1] bg-slate-600 rounded-lg border-b-2 border-b-white border-solid">
             <h3 className="text-4xl">
               {hours > 0 && padZero(hours) + "h "}
-              {padZero(minutes)}
-              {hours < 1 && "m " + padZero(seconds) + "s"}
+              {padZero(minutes) + "m"}
+              {hours < 1 && " " + padZero(seconds) + "s"}
             </h3>
           </div>
           {isRunning && !skipBreaks && (
             <div
               onClick={() => pauseTimer()}
-              className="flex justify-center items-center my-4 h-8 px-2  bg-slate-600 shadow-black shadow-sm rounded-lg cursor-pointer"
+              className="flex justify-center items-center my-4 h-8 px-2  bg-slate-600 shadow-black shadow-sm rounded-lg cursor-pointer hover:bg-slate-700"
             >
               Take a break.
             </div>
@@ -86,7 +86,7 @@ function TimerBoard({
           {!isRunning && (
             <div
               onClick={() => startTimer(paused)}
-              className="flex justify-center items-center h-12 px-2  bg-slate-600 shadow-black shadow-sm rounded-lg cursor-pointer"
+              className="flex justify-center items-center h-12 px-2  bg-slate-600 shadow-black shadow-sm rounded-lg cursor-pointer hover:bg-slate-700"
             >
               {paused ? "Resume" : "Start"} focus sesson
             </div>
@@ -96,7 +96,7 @@ function TimerBoard({
               onClick={() => {
                 resetTimer();
               }}
-              className="flex justify-center items-center my-4 w-16 aspect-square rounded-full bg-slate-600 shadow-black shadow-sm cursor-pointer"
+              className="flex justify-center items-center my-4 w-16 aspect-square rounded-full bg-slate-600 shadow-black shadow-sm cursor-pointer hover:bg-slate-700"
             >
               End
             </div>

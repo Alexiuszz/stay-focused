@@ -1,18 +1,21 @@
-import { configureStore, getDefaultMiddleware } from '@reduxjs/toolkit'
-import settingsReducer from "./slices/settings-slice"
-import dataReducer from "./slices/data-slice"
-
+import {
+  configureStore,
+} from "@reduxjs/toolkit";
+import settingsReducer from "./slices/settings-slice";
+import dataReducer from "./slices/data-slice";
+import todoReducer from "./slices/todos-slice";
 
 // Automatically adds the thunk middleware and the Redux DevTools extension
 export const store = configureStore({
   // Automatically calls `combineReducers`
   reducer: {
     settings: settingsReducer,
-    data: dataReducer
+    data: dataReducer,
+    todo: todoReducer,
   },
-})
+});
 
 // Infer the `RootState` and `AppDispatch` types from the store itself
-export type RootState = ReturnType<typeof store.getState>
+export type RootState = ReturnType<typeof store.getState>;
 // Inferred type: {posts: PostsState, comments: CommentsState, users: UsersState}
-export type AppDispatch = typeof store.dispatch
+export type AppDispatch = typeof store.dispatch;

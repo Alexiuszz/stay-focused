@@ -22,11 +22,11 @@ import {
   latestUserData,
   storeLatest,
   storeTodayData,
-} from "@/helpers/localStorage";
+} from "@/storage/dataStorage";
 
 import dynamic from "next/dynamic";
 import { streakEnded } from "@/helpers/utils";
-import { initStorageData } from "../helpers/localStorage";
+import { initStorageData } from "../storage/dataStorage";
 
 const Progress = dynamic(() => import("../components/progress"), {
   ssr: false,
@@ -44,6 +44,11 @@ export default function Home() {
   const dispatch = useAppDispatch();
 
   const startTimer = (paused: boolean = false) => {
+    let data = latestUserData();
+    if (data.key !== new Date().toDateString()) {
+      window.location.reload();
+      return;
+    }
     !paused && dispatch(incrementSession());
     dispatch(takeBreak(false));
     start();

@@ -1,8 +1,8 @@
+import { getTodos } from "@/storage/todoStorage";
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
 
-interface TodoType {
+export interface TodoType {
   createdAt: Date;
-  dueAt: number;
   task: string;
   key: string;
   completed: boolean;
@@ -12,7 +12,7 @@ export interface TodoStateType {
   completedAll: boolean;
 }
 const initialState: TodoStateType = {
-  todos: [],
+  todos: getTodos(),
   completedAll: false,
 };
 export const todoSlice = createSlice({
@@ -21,6 +21,15 @@ export const todoSlice = createSlice({
   reducers: {
     addTodo: (state, action: PayloadAction<TodoType>) => {
       state.todos = [...state.todos, action.payload];
+      state.todos.sort((a, b) => {
+        if (a.createdAt > b.createdAt) {
+          return -1;
+        } else if (a.createdAt < b.createdAt) {
+          return 1;
+        }
+        // a must be equal to b
+        return 0;
+      });
     },
     deleteTodo: (state, action: PayloadAction<string>) => {
       const todo = state.todos.findIndex(
@@ -33,6 +42,15 @@ export const todoSlice = createSlice({
       } else {
         console.log("Todo not found for the given key:", todo);
       }
+      state.todos.sort((a, b) => {
+        if (a.createdAt > b.createdAt) {
+          return -1;
+        } else if (a.createdAt < b.createdAt) {
+          return 1;
+        }
+        // a must be equal to b
+        return 0;
+      });
     },
     toggleTodoComplete: (
       state,

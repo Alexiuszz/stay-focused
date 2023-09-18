@@ -27,28 +27,30 @@ const RoundMeter = ({
         cy={size / 2}
         r={radius}
         fill="transparent"
-        stroke="#a5a5a5" // Background color
+        stroke="#64748b" // Background color
         strokeWidth={strokeWidth}
       />
-      <circle
-        cx={size / 2}
-        cy={size / 2}
-        r={radius}
-        fill="transparent"
-        stroke="#1be96d" // Gauge color
-        strokeWidth={strokeWidth}
-        strokeDasharray={circumference}
-        strokeLinecap="round"
-        strokeDashoffset={offset}
-        transform={`rotate(-90 ${size / 2} ${size / 2})`}
-      />
+      {percentage > 5 && (
+        <circle
+          cx={size / 2}
+          cy={size / 2}
+          r={radius}
+          fill="transparent"
+          stroke="#1be96d" // Gauge color
+          strokeWidth={strokeWidth}
+          strokeDasharray={circumference}
+          strokeLinecap="round"
+          strokeDashoffset={offset}
+          transform={`rotate(-90 ${size / 2} ${size / 2})`}
+        />
+      )}
       <text
         x={size / 2}
         y={size / 2}
         textAnchor="middle"
         alignmentBaseline="middle"
         fontSize="24"
-        fill={value < maxValue?"#dadada":"#50a264" }// Text color
+        fill={value < maxValue ? "#dadada" : "#50a264"} // Text color
         className="flex flex-col"
       >
         {value < maxValue

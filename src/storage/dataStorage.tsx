@@ -1,6 +1,6 @@
 import { SettingsState } from "@/redux/slices/settings-slice";
 import ls from "localstorage-slim";
-import { secondsLeftToday } from "./utils";
+import { secondsLeftToday } from "../helpers/utils";
 import { DataState } from "@/redux/slices/data-slice";
 
 var today = new Date();

@@ -1,6 +1,6 @@
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
 import type { RootState } from "../store";
-import { getTodayData } from "../../helpers/localStorage";
+import { getTodayData } from "../../storage/dataStorage";
 
 // Define a type for the slice state
 // Times are in minutes
