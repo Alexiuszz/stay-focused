@@ -4,11 +4,10 @@ import SidePanel from "./side-panel";
 
 function Layout({
   children,
-  page,
   onClick,
 }: {
   children: ReactNode;
-  page: string;
+  page?: string;
   onClick: () => void;
 }) {
   return (

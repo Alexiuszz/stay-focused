@@ -3,10 +3,10 @@ import ls from "localstorage-slim";
 import { secondsLeftToday } from "../helpers/utils";
 import { DataState } from "@/redux/slices/data-slice";
 
-var today = new Date();
+const today = new Date();
 today.setHours(0, 0, 0);
 
-var todayKey = "FocusedData(" + today.toDateString() + ")";
+const todayKey = "FocusedData(" + today.toDateString() + ")";
 export const latestData: string = "FocusedData(latestData)";
 export const tempLatest: string = "FocusedData(TempLatest)";
 export const storeUserSettings = (
@@ -17,7 +17,7 @@ export const storeUserSettings = (
 
 export const getUserSettings = () => {
   if (typeof window !== "undefined") {
-    let storedSettings = ls.get("Focused(settings)");
+    const storedSettings = ls.get("Focused(settings)");
     if (storedSettings) return storedSettings;
     else {
       storeUserSettings({
@@ -63,14 +63,14 @@ interface StorageDataReturnType {
   bestStreak: number;
   key: string;
 }
-const initialData: DataState = {
-  currTime: 0,
-  totalTime: 0,
-  paused: false,
-  sessions: 0,
-  currStreak: 0,
-  bestStreak: 0,
-};
+// const initialData: DataState = {
+//   currTime: 0,
+//   totalTime: 0,
+//   paused: false,
+//   sessions: 0,
+//   currStreak: 0,
+//   bestStreak: 0,
+// };
 export const initStorageData = {
   totalTime: 0,
   sessions: 0,
@@ -82,7 +82,7 @@ export const storeTodayData = (
   data: StorageDataType,
   storeLatest: boolean = true
 ): void => {
-  let newData = {
+  const newData = {
     ...data,
     key: today.toDateString(),
     expiry: new Date(
@@ -94,7 +94,7 @@ export const storeTodayData = (
 };
 
 export const storeLatest = (): void => {
-  let data = ls.get(tempLatest);
+  const data = ls.get(tempLatest);
   if (!data) {
     ls.set(tempLatest, ls.get(latestData), {
       ttl: secondsLeftToday() + (24 * 3600),
@@ -104,7 +104,7 @@ export const storeLatest = (): void => {
 
 export const getTodayData = (): DataState => {
   if (typeof window !== "undefined") {
-    let data: StorageDataReturnType =
+    const data: StorageDataReturnType =
       ls.get(todayKey) || initStorageData;
     if (ls.get(todayKey))
       return { ...data, paused: false, currTime: 0 };
@@ -119,13 +119,13 @@ export const getTodayData = (): DataState => {
   };
 };
 export const latestUserData = (): StorageDataReturnType => {
-  let data: StorageDataReturnType =
+  const data: StorageDataReturnType =
     (typeof window !== "undefined" && ls.get(latestData)) ||
     initStorageData;
   return data;
 };
 export const GetLatestTempData = (): StorageDataReturnType => {
-  let data: StorageDataReturnType =
+  const data: StorageDataReturnType =
     (typeof window !== "undefined" && ls.get(tempLatest)) ||
     initStorageData;
   return data;

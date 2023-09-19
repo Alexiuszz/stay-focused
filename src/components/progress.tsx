@@ -16,9 +16,9 @@ function Progress({ totalTimeToday }: { totalTimeToday: number }) {
     <div className="w-2/5 min-w-fit h-full">
       <BoardContainer>
         {totalTimeToday > dailyGoal ? (
-          <p>Well done, you've achieved your goal!</p>
+          <p>Well done, you&apos;ve achieved your goal!</p>
         ) : (
-          <p>Keep going, you're doing great!</p>
+          <p>Keep going, you&apos;re doing great!</p>
         )}
         <div className="w-full h-4/5 flex justify-around items-center">
           <div className="flex flex-col justify-center items-center">

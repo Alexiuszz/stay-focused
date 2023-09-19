@@ -48,7 +48,7 @@ export default function Home() {
   const dispatch = useAppDispatch();
 
   const startTimer = (paused: boolean = false) => {
-    let data = latestUserData();
+    const data = latestUserData();
     if (data.key !== new Date().toDateString()) {
       window.location.reload();
       return;
@@ -75,7 +75,7 @@ export default function Home() {
   //store latest in temp storage
   //set best streak from latest data
   useEffect(() => {
-    let data = latestUserData();
+    const data = latestUserData();
     if (data.key !== new Date().toDateString()) {
       if (data.totalTime > 1) {
         streakEnded(new Date(data.key))
@@ -86,8 +86,8 @@ export default function Home() {
         return;
       }
     }
-    let tempData = GetLatestTempData();
-    let diff = differenceInDays(new Date(tempData.key), new Date());
+    const tempData = GetLatestTempData();
+    const diff = differenceInDays(new Date(tempData.key), new Date());
     if (
       tempData.totalTime > 0 &&
       diff === 1 &&
@@ -99,7 +99,7 @@ export default function Home() {
   }, []);
 
   useEffect(() => {
-    let data = latestUserData();
+    const data = latestUserData();
     if (data.key !== new Date().toDateString()) {
       storeTodayData(initStorageData, false);
     }

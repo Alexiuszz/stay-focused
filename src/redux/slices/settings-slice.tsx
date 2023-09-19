@@ -13,7 +13,7 @@ export interface SettingsState {
   skipBreaks: boolean;
 }
 
-var userSettings = getUserSettings();
+const userSettings = getUserSettings();
 
 // Define the initial state using that type
 const initialState: SettingsState = userSettings as SettingsState;

@@ -2,7 +2,7 @@ import { secondsLeftToday } from "@/helpers/utils";
 import { TodoType } from "@/redux/slices/todos-slice";
 import ls from "localstorage-slim";
 
-var today = new Date();
+const today = new Date();
 today.setHours(0, 0, 0);
 
 const todosKey = (): string =>
@@ -16,7 +16,7 @@ export const storeTodos = (todos: TodoType[]) => {
 
 export const getTodos = (): TodoType[] => {
   if (typeof window !== "undefined") {
-    let todos: TodoType[] = ls.get(todosKey()) || [];
+    const todos: TodoType[] = ls.get(todosKey()) || [];
     if (todos) return todos;
   }
   return [];
@@ -25,6 +25,6 @@ export const getTodos = (): TodoType[] => {
 export const prevTodos = (): TodoType[] => {
   const yesterday = new Date(today.getTime() - (24 * 3600));
   const prevKey = "FocusedTodos(" + yesterday.toDateString() + ")";
-  let todos: TodoType[] = ls.get(prevKey) || [];
+  const todos: TodoType[] = ls.get(prevKey) || [];
   return todos;
 };

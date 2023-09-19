@@ -34,7 +34,7 @@ function Todo({
     );
 
   const createTodo = (todoTask: string) => {
-    let todo = {
+    const todo = {
       key: todos.length.toString(),
       completed: false,
       task: todoTask,
@@ -69,7 +69,7 @@ function Todo({
                 <p>No tasks from yesterday</p>
               )}
               {prevTodosList.map((todo, i) => (
-                <div className="w-11/12 h-fit flex items-end justify-between">
+                <div key={i} className="w-11/12 h-fit flex items-end justify-between">
                   <p className="text-slate-500 ">{todo.task}</p>
                   <div
                     onClick={() => createTodo(todo.task)}
