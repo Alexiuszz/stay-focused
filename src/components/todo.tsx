@@ -1,4 +1,4 @@
-import React, { ChangeEvent, useState } from "react";
+import React, { ChangeEvent, useEffect, useState } from "react";
 import BoardContainer from "./boardContainer";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faPlus } from "@fortawesome/free-solid-svg-icons";
@@ -7,6 +7,7 @@ import {
   addTodo,
   toggleTodoComplete,
 } from "@/redux/slices/todos-slice";
+import { storeTodos } from "@/storage/todoStorage";
 
 function Todo() {
   const todos = useAppSelector((state) => state.todo.todos);
@@ -25,16 +26,19 @@ function Todo() {
     );
 
   const createTodo = () => {
-    dispatch(
-      addTodo({
-        key: todos.length.toString(),
-        completed: false,
-        task: newTodo,
-        createdAt: new Date().toString(),
-      })
-    );
+    let todo = {
+      key: todos.length.toString(),
+      completed: false,
+      task: newTodo,
+      createdAt: new Date().toString(),
+    };
+    dispatch(addTodo(todo));
     setNewTodo("");
   };
+
+  useEffect(() => {
+    storeTodos([...todos]);
+  }, [todos]);
 
   const handleChange = (event: ChangeEvent<HTMLInputElement>) => {
     setNewTodo(event.target.value);
@@ -62,7 +66,10 @@ function Todo() {
         {todos.map((todo, i) => {
           return (
             !todo.completed && (
-              <div className="flex items-end justify-between w-11/12"  key={i}>
+              <div
+                className="flex items-end justify-between w-11/12"
+                key={i}
+              >
                 <p>{todo.task}</p>
                 <input
                   type="checkbox"
@@ -79,7 +86,10 @@ function Todo() {
         {todos.map((todo, i) => {
           return (
             todo.completed && (
-              <div className="flex items-end justify-between w-11/12" key={i}>
+              <div
+                className="flex items-end justify-between w-11/12"
+                key={i}
+              >
                 <p className="text-slate-500 line-through">
                   {todo.task}
                 </p>

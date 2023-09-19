@@ -53,7 +53,7 @@ interface StorageDataType {
   sessions: number;
   currStreak: number;
   bestStreak: number;
-  key?:string
+  key?: string;
 }
 
 interface StorageDataReturnType {
@@ -61,7 +61,7 @@ interface StorageDataReturnType {
   sessions: number;
   currStreak: number;
   bestStreak: number;
-  key:string
+  key: string;
 }
 const initialData: DataState = {
   currTime: 0,
@@ -75,10 +75,13 @@ export const initStorageData = {
   totalTime: 0,
   sessions: 0,
   currStreak: 0,
-  key:"",
+  key: "",
   bestStreak: 0,
 };
-export const storeTodayData = (data: StorageDataType): void => {
+export const storeTodayData = (
+  data: StorageDataType,
+  storeLatest: boolean = true
+): void => {
   let newData = {
     ...data,
     key: today.toDateString(),
@@ -87,21 +90,22 @@ export const storeTodayData = (data: StorageDataType): void => {
     ).toDateString(),
   };
   ls.set(todayKey, newData, { ttl: 3600 * 24 * 7 });
-  ls.set(latestData, newData);
+  storeLatest && ls.set(latestData, newData);
 };
 
 export const storeLatest = (): void => {
   let data = ls.get(tempLatest);
   if (!data) {
     ls.set(tempLatest, ls.get(latestData), {
-      ttl: secondsLeftToday(),
+      ttl: secondsLeftToday() + (24 * 3600),
     });
   }
 };
 
 export const getTodayData = (): DataState => {
   if (typeof window !== "undefined") {
-    let data: StorageDataReturnType = ls.get(todayKey) || initStorageData;
+    let data: StorageDataReturnType =
+      ls.get(todayKey) || initStorageData;
     if (ls.get(todayKey))
       return { ...data, paused: false, currTime: 0 };
   }

@@ -1,7 +1,6 @@
 import ChartBoard from "@/components/chartBoard";
 import Layout from "@/components/layout";
 import TimerBoard from "@/components/timer";
-import Todo from "@/components/todo";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faStarOfLife } from "@fortawesome/free-solid-svg-icons";
 import { useStopwatch } from "react-timer-hook";
@@ -28,9 +27,11 @@ import {
 import dynamic from "next/dynamic";
 import { differenceInDays, streakEnded } from "@/helpers/utils";
 import { initStorageData } from "../storage/dataStorage";
-import { difference } from "next/dist/build/utils";
 
 const Progress = dynamic(() => import("../components/progress"), {
+  ssr: false,
+});
+const Todo = dynamic(() => import("../components/todo"), {
   ssr: false,
 });
 
@@ -100,7 +101,7 @@ export default function Home() {
   useEffect(() => {
     let data = latestUserData();
     if (data.key !== new Date().toDateString()) {
-      storeTodayData(initStorageData);
+      storeTodayData(initStorageData, false);
     }
   });
 
