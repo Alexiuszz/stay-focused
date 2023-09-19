@@ -4,7 +4,6 @@
     "eslint:recommended",
     "plugin:@typescript-eslint/recommended"
   ],
-  "no-restricted-imports": "off",
   "@typescript-eslint/no-restricted-imports": [
     "warn",
     {
