@@ -5,12 +5,14 @@ import SidePanel from "./side-panel";
 function Layout({
   children,
   page,
+  onClick,
 }: {
   children: ReactNode;
   page: string;
+  onClick: () => void;
 }) {
   return (
-    <main className=" overflow-hidden font-TT subpixel-antialiased text-sm bg-slate-100 dark:bg-slate-900  text-fa text-slate-900 dark:text-slate-300 flex justify-end items-end h-screen pr-12">
+    <main onClick={onClick} className=" overflow-hidden font-TT subpixel-antialiased text-sm bg-slate-100 dark:bg-slate-900  text-fa text-slate-900 dark:text-slate-300 flex justify-end items-end h-screen pr-12">
       <NavBar />
       <SidePanel />
       {children}

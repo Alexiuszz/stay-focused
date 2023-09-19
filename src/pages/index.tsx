@@ -16,7 +16,7 @@ import {
   takeBreak,
   totalTimeIncrement,
 } from "@/redux/slices/data-slice";
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import {
   GetLatestTempData,
   latestUserData,
@@ -36,6 +36,7 @@ const Todo = dynamic(() => import("../components/todo"), {
 });
 
 export default function Home() {
+  const [openPrevTodos, setOpenPrevTodos] = useState<boolean>(false);
   const { minutes, hours, seconds, isRunning, start, pause, reset } =
     useStopwatch({ autoStart: false });
 
@@ -87,7 +88,6 @@ export default function Home() {
     }
     let tempData = GetLatestTempData();
     let diff = differenceInDays(new Date(tempData.key), new Date());
-    console.log(diff);
     if (
       tempData.totalTime > 0 &&
       diff === 1 &&
@@ -118,7 +118,7 @@ export default function Home() {
   }, [seconds]);
 
   return (
-    <Layout page="home">
+    <Layout page="home" onClick={() => setOpenPrevTodos(false)}>
       <section className="X-main mr-0 w-3/4 flex flex-col gap-4">
         <div className="flex w-full h-fit">
           <h1 className="text-xl mb-1">
@@ -139,7 +139,12 @@ export default function Home() {
           <Progress totalTimeToday={totalTime} />
         </div>
         <div className="flex justify-between w-full max-w-4xl h-fit gap-4">
-          <Todo />
+          <Todo
+            setOpenPrevTodos={() =>
+              setOpenPrevTodos((prevState) => !prevState)
+            }
+            openPrevTodos={openPrevTodos}
+          />
           <ChartBoard />
         </div>
       </section>

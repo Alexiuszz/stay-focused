@@ -21,3 +21,10 @@ export const getTodos = (): TodoType[] => {
   }
   return [];
 };
+
+export const prevTodos = (): TodoType[] => {
+  const yesterday = new Date(today.getTime() - (24 * 3600));
+  const prevKey = "FocusedTodos(" + yesterday.toDateString() + ")";
+  let todos: TodoType[] = ls.get(prevKey) || [];
+  return todos;
+};

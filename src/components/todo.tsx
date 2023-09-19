@@ -1,16 +1,24 @@
 import React, { ChangeEvent, useEffect, useState } from "react";
 import BoardContainer from "./boardContainer";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faPlus } from "@fortawesome/free-solid-svg-icons";
+import { faClock, faPlus } from "@fortawesome/free-solid-svg-icons";
 import { useAppDispatch, useAppSelector } from "@/redux/hooks";
 import {
   addTodo,
+  deleteTodo,
   toggleTodoComplete,
 } from "@/redux/slices/todos-slice";
-import { storeTodos } from "@/storage/todoStorage";
+import { prevTodos, storeTodos } from "@/storage/todoStorage";
 
-function Todo() {
+function Todo({
+  openPrevTodos,
+  setOpenPrevTodos,
+}: {
+  openPrevTodos: boolean;
+  setOpenPrevTodos: () => void;
+}) {
   const todos = useAppSelector((state) => state.todo.todos);
+  const prevTodosList = prevTodos();
   const [newTodo, setNewTodo] = useState<string>("");
   const dispatch = useAppDispatch();
 
@@ -25,11 +33,11 @@ function Todo() {
       })
     );
 
-  const createTodo = () => {
+  const createTodo = (todoTask: string) => {
     let todo = {
       key: todos.length.toString(),
       completed: false,
-      task: newTodo,
+      task: todoTask,
       createdAt: new Date().toString(),
     };
     dispatch(addTodo(todo));
@@ -45,8 +53,35 @@ function Todo() {
   };
 
   return (
-    <div className="w-1/2">
+    <div className="w-1/2 max-h-72 min-w-fit z-10">
       <BoardContainer>
+        <div
+          onClick={(e) => {
+            setOpenPrevTodos();
+            e.stopPropagation();
+          }}
+          className="absolute top-4 left-2 w-fit h-fit p-1 flex justify-between cursor-pointer"
+        >
+          <FontAwesomeIcon icon={faClock} />
+          {openPrevTodos && (
+            <div className="w-72 h-fit py-2 bg-slate-500 rounded-md">
+              {prevTodosList.length < 1 && (
+                <p>No tasks from yesterday</p>
+              )}
+              {prevTodosList.map((todo, i) => (
+                <div className="w-11/12 h-fit flex items-end justify-between">
+                  <p className="text-slate-500 ">{todo.task}</p>
+                  <div
+                    onClick={() => createTodo(todo.task)}
+                    className="flex items-center justify-center cursor-pointer p-1 w-6 h-6 text-xs bg-slate-500 rounded-sm shadow-sm shadow-black hover:bg-slate-600"
+                  >
+                    <FontAwesomeIcon icon={faPlus} />
+                  </div>
+                </div>
+              ))}
+            </div>
+          )}
+        </div>
         <p className="text-sm">Make a list of things to do today!</p>
         <div className="flex justify-between items-end w-11/12">
           <input
@@ -57,7 +92,7 @@ function Todo() {
             onChange={handleChange}
           />
           <div
-            onClick={() => newTodo.length > 0 && createTodo()}
+            onClick={() => newTodo.length > 0 && createTodo(newTodo)}
             className="flex items-center justify-center cursor-pointer p-1 w-6 h-6 text-xs bg-slate-500 rounded-sm shadow-sm shadow-black hover:bg-slate-600"
           >
             <FontAwesomeIcon icon={faPlus} />
@@ -67,9 +102,17 @@ function Todo() {
           return (
             !todo.completed && (
               <div
-                className="flex items-end justify-between w-11/12"
+                className={`flex items-end justify-between w-11/12 relative p-2 rounded-md ${
+                  i % 2 > 0 && "bg-slate-500"
+                }`}
                 key={i}
               >
+                <div
+                  onClick={() => dispatch(deleteTodo(todo.key))}
+                  className="flex justify-center overflow-hidden p-1 items-center h-2 w-2 cursor-pointer rounded-full bg-red-500 shadow-sm shadow-black absolute top-0 -left-3 text-xs"
+                >
+                  &#10005;
+                </div>
                 <p>{todo.task}</p>
                 <input
                   type="checkbox"
