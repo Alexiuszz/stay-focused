@@ -144,7 +144,7 @@ export default function Home() {
             }
             openPrevTodos={openPrevTodos}
           />
-          <ChartBoard />
+          <ChartBoard totalTime={totalTime} />
         </div>
       </section>
     </Layout>

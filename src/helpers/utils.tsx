@@ -29,4 +29,34 @@ export const differenceInDays = (day1: Date, day2: Date): number => {
   return Math.floor(Difference_In_Time / (1000 * 3600 * 24));
 };
 
+export function rotateArray<Type>(arr: Type[], pos: number): Type[] {
+  pos %= arr.length; // if pos is greater than arr.length then one cycle is completed that means it will remain the same and we have to remainder shifts
 
+  const reverse = function (i: number, j: number) {
+    while (i < j) {
+      const temp = arr[i];
+      arr[i] = arr[j];
+      arr[j] = temp;
+      i++;
+      j--;
+    }
+  }; // suppose  ----->--->
+  reverse(0, arr.length - 1); // reverse   <--<------
+  reverse(0, pos - 1); // reverse first part ---><----
+  reverse(pos, arr.length - 1); // reverse second part --->----->
+  return arr;
+}
+export const getDays = (): string[] => {
+  const days = [
+    "Sun",
+    "Mon",
+    "Tue",
+    "Wed",
+    "Thur",
+    "Fri",
+    "Sat",
+  ];
+
+  const today = new Date();
+  return rotateArray<string>(days, today.getDay() + 1);
+};

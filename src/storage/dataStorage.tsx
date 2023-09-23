@@ -97,7 +97,7 @@ export const storeLatest = (): void => {
   const data = ls.get(tempLatest);
   if (!data) {
     ls.set(tempLatest, ls.get(latestData), {
-      ttl: secondsLeftToday() + (24 * 3600),
+      ttl: secondsLeftToday() + 24 * 3600,
     });
   }
 };
@@ -132,3 +132,17 @@ export const GetLatestTempData = (): StorageDataReturnType => {
 };
 
 /* Todo */
+export const last7Data = (): number[] => {
+  let timeData: number[] = [];
+  if (typeof window !== "undefined")
+    for (let i = 1; i < 7; i++) {
+      const day = new Date(today.getTime() - i * 24 * 3600 * 1000);
+      console.log(day.toDateString());
+      const data: StorageDataReturnType =
+        ls.get(`FocusedData(${day.toDateString()})`) ||
+        initStorageData;
+      timeData = [data.totalTime/60, ...timeData];
+    }
+  console.log(timeData);
+  return timeData;
+};
