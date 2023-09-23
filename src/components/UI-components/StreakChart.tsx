@@ -24,11 +24,21 @@ ChartJS.register(
   Legend
 );
 
+ChartJS.defaults.color = "#d3cfcf";
+ChartJS.defaults.font.weight = "100";
+
 export const options = {
   responsive: true,
   plugins: {
     legend: {
       position: "top" as const,
+      display: false,
+      labels: {
+        font: {
+          size: 12,
+          weight: "100",
+        },
+      },
     },
     title: {
       display: true,
@@ -48,10 +58,11 @@ export function StreakChart({ todayTime }: { todayTime: number }) {
         datasets: [
           {
             fill: true,
-            label: "Time Focused",
-            data: [...last7Data(), todayTime / 60],
+            label: "",
+            data: [...last7Data(), Math.ceil(todayTime / 60)],
             borderColor: "rgb(53, 235, 77)",
             backgroundColor: "rgba(53, 235, 77, 0.5)",
+            tension: 0.5,
           },
         ],
       }}
