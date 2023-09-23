@@ -1,8 +1,6 @@
 import ChartBoard from "@/components/chartBoard";
 import Layout from "@/components/layout";
 import TimerBoard from "@/components/timer";
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faStarOfLife } from "@fortawesome/free-solid-svg-icons";
 import { useStopwatch } from "react-timer-hook";
 import { useAppDispatch, useAppSelector } from "@/redux/hooks";
 import {
@@ -27,6 +25,7 @@ import {
 import dynamic from "next/dynamic";
 import { differenceInDays, streakEnded } from "@/helpers/utils";
 import { initStorageData } from "../storage/dataStorage";
+import Head from "next/head";
 
 const Progress = dynamic(() => import("../components/progress"), {
   ssr: false,
@@ -117,36 +116,60 @@ export default function Home() {
   }, [seconds]);
 
   return (
-    <Layout page="home" onClick={() => setOpenPrevTodos(false)}>
-      <section className="X-main mr-0 w-3/4 flex flex-col gap-4">
-        <div className="flex w-full h-fit">
-          <h1 className="text-xl mb-1">
-            Get more done with Stay Focused
-          </h1>
-          <FontAwesomeIcon icon={faStarOfLife} />
-        </div>
-        <div className="flex justify-between w-full max-w-4xl h-80 gap-4">
-          <TimerBoard
-            hours={hours}
-            minutes={minutes}
-            seconds={seconds}
-            isRunning={isRunning}
-            startTimer={startTimer}
-            pause={pause}
-            resetTimer={resetTimer}
-          />
-          <Progress totalTimeToday={totalTime} />
-        </div>
-        <div className="flex justify-between w-full max-w-4xl h-fit gap-4">
-          <Todo
-            setOpenPrevTodos={() =>
-              setOpenPrevTodos((prevState) => !prevState)
-            }
-            openPrevTodos={openPrevTodos}
-          />
-          <ChartBoard totalTime={totalTime} />
-        </div>
-      </section>
-    </Layout>
+    <>
+      <Head>
+        <title>Stay Focused</title>
+        <link
+          rel="canonical"
+          href="https://stay-focused-nine.vercel.app/"
+          key="canonical"
+        />
+        <meta
+          name="description"
+          content="Track time spent focused everyday"
+          key="desc"
+        />
+        <meta property="og:title" content="Stay Focused" />
+        <meta
+          property="og:description"
+          content="Track your work"
+        />
+        <meta
+          property="og:image"
+          content="https://stay-focused-nine.vercel.app/logo"
+        />
+      </Head>
+      <Layout page="home" onClick={() => setOpenPrevTodos(false)}>
+        <section className="X-main mr-0 w-3/4 flex flex-col gap-4">
+          <div className="flex w-full h-fit">
+            <h1 className="text-xl mb-1">
+              Get more done with Stay Focused
+            </h1>
+            {/* <FontAwesomeIcon icon={faStarOfLife} /> */}
+          </div>
+          <div className="flex justify-between w-full max-w-4xl h-80 gap-4">
+            <TimerBoard
+              hours={hours}
+              minutes={minutes}
+              seconds={seconds}
+              isRunning={isRunning}
+              startTimer={startTimer}
+              pause={pause}
+              resetTimer={resetTimer}
+            />
+            <Progress totalTimeToday={totalTime} />
+          </div>
+          <div className="flex justify-between w-full max-w-4xl h-fit gap-4">
+            <Todo
+              setOpenPrevTodos={() =>
+                setOpenPrevTodos((prevState) => !prevState)
+              }
+              openPrevTodos={openPrevTodos}
+            />
+            <ChartBoard totalTime={totalTime} />
+          </div>
+        </section>
+      </Layout>
+    </>
   );
 }
