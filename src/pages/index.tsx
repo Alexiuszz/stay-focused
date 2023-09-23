@@ -76,12 +76,12 @@ export default function Home() {
   //set best streak from latest data
   useEffect(() => {
     const data = latestUserData();
+    data && dispatch(setBestStreak(data.bestStreak));
     if (data.key !== new Date().toDateString()) {
       if (data.totalTime > 1) {
         streakEnded(new Date(data.key))
           ? dispatch(resetStreak())
           : dispatch(setCurrStreak(data.currStreak));
-        dispatch(setBestStreak(data.bestStreak));
         storeLatest();
         return;
       }
@@ -94,14 +94,13 @@ export default function Home() {
       data.currStreak < tempData.currStreak
     ) {
       dispatch(setCurrStreak(tempData.currStreak));
-      dispatch(setBestStreak(tempData.bestStreak));
     }
   }, []);
 
   useEffect(() => {
     const data = latestUserData();
     if (data.key !== new Date().toDateString()) {
-      storeTodayData(initStorageData, false);
+      storeTodayData(initStorageData);
     }
   });
 
