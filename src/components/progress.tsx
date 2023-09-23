@@ -4,6 +4,7 @@ import RoundMeter from "./UI-components/meter";
 import { useAppSelector } from "@/redux/hooks";
 import { bestStreak, currStreak } from "@/redux/slices/data-slice";
 import { sessions } from "../redux/slices/data-slice";
+import { secondsToHrMins } from "@/helpers/utils";
 
 function Progress({ totalTimeToday }: { totalTimeToday: number }) {
   const dailyGoal = useAppSelector(
@@ -20,6 +21,7 @@ function Progress({ totalTimeToday }: { totalTimeToday: number }) {
         ) : (
           <p>Keep going, you&apos;re doing great!</p>
         )}
+        <p>{`${secondsToHrMins(totalTimeToday).hrs}hr ${secondsToHrMins(totalTimeToday).mins}mins today`}</p>
         <div className="w-full h-4/5 flex justify-around items-center">
           <div className="flex flex-col justify-center items-center">
             <p className="text-xs">Streak</p>
