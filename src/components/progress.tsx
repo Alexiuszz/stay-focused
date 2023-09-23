@@ -14,7 +14,7 @@ function Progress({ totalTimeToday }: { totalTimeToday: number }) {
   const bestStreakValue = useAppSelector(bestStreak);
   const sessionsValue = useAppSelector(sessions);
   return (
-    <div className="w-2/5 min-w-fit h-full">
+    <div className="w-11/12 md:2/5 h-80 md:h-full min-w-fit mx-auto">
       <BoardContainer>
         {totalTimeToday > dailyGoal ? (
           <p>Well done, you&apos;ve achieved your goal!</p>

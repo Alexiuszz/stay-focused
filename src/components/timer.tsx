@@ -53,7 +53,7 @@ function TimerBoard({
   }, [paused]);
 
   return (
-    <div className="w-3/5 h-full min-w-fit">
+    <div className="w-11/12 md:3/5 h-80 md:h-full min-w-fit mx-auto">
       <BoardContainer>
         {!isRunning && !paused && (
           <h1>Keep track of work sessions with stay-focused</h1>

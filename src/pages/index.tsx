@@ -130,24 +130,21 @@ export default function Home() {
           key="desc"
         />
         <meta property="og:title" content="Stay Focused" />
-        <meta
-          property="og:description"
-          content="Track your work"
-        />
+        <meta property="og:description" content="Track your work" />
         <meta
           property="og:image"
           content="https://stay-focused-nine.vercel.app/logo"
         />
       </Head>
       <Layout page="home" onClick={() => setOpenPrevTodos(false)}>
-        <section className="X-main mr-0 w-3/4 flex flex-col gap-4">
-          <div className="flex w-full h-fit">
-            <h1 className="text-xl mb-1">
+        <section className="X-main mx-auto md:mr-0 w-full md:w-11/12 lg:w-3/4 flex flex-col items-center gap-4">
+          <div className="flex w-full h-fit mx-auto md:mx-0">
+            <h1 className="text-xl mb-1 ml-4 md:ml-0 ">
               Get more done with Stay Focused
             </h1>
             {/* <FontAwesomeIcon icon={faStarOfLife} /> */}
           </div>
-          <div className="flex justify-between w-full max-w-4xl h-80 gap-4">
+          <div className="flex flex-col md:flex-row justify-between w-full max-w-4xl h-fit md:h-80 gap-4">
             <TimerBoard
               hours={hours}
               minutes={minutes}
@@ -159,7 +156,7 @@ export default function Home() {
             />
             <Progress totalTimeToday={totalTime} />
           </div>
-          <div className="flex justify-between w-full max-w-4xl h-fit gap-4">
+          <div className="flex flex-col md:flex-row justify-between w-full max-w-4xl h-fit gap-4">
             <Todo
               setOpenPrevTodos={() =>
                 setOpenPrevTodos((prevState) => !prevState)
