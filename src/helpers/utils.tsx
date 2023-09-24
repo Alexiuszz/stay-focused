@@ -58,5 +58,5 @@ export const getDays = (): string[] => {
   ];
 
   const today = new Date();
-  return rotateArray<string>(days, today.getDay() + 1);
+  return rotateArray<string>(days, today.getDay()).reverse();
 };
