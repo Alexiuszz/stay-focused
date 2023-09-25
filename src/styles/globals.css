@@ -3,7 +3,7 @@
 @tailwind utilities;
 
 :root {
-  --foreground-rgb: #D9DCDF;
+  --foreground-rgb: #d9dcdf;
   --background-start-rgb: 214, 219, 220;
   --background-end-rgb: 255, 255, 255;
 }
@@ -15,12 +15,25 @@
     --background-end-rgb: 0, 0, 0;
   }
 }
-.X-main{
-  height: calc(100vh - 2rem);  
+
+.main-container::-webkit-scrollbar {
+  width: 12px;
+}
+.main-container::-webkit-scrollbar-thumb {
+  background-color: #475569;
+  border: 3px solid #2c3b4f;
+  border-radius: 10px;
+}
+.main-container::-webkit-scrollbar-track {
+  background: #4f667c;
 }
 
-@media screen and (max-width: 768px){
-  .X-main{
-    height: calc(100vh - 4rem); 
+.X-main {
+  height: calc(100vh - 2rem);
+}
+
+@media screen and (max-width: 768px) {
+  .X-main {
+    height: calc(100vh - 4rem);
   }
 }
