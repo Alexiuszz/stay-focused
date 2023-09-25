@@ -9,6 +9,7 @@ today.setHours(0, 0, 0);
 const todayKey = "FocusedData(" + today.toDateString() + ")";
 export const latestData: string = "FocusedData(latestData)";
 export const tempLatest: string = "FocusedData(TempLatest)";
+
 export const storeUserSettings = (
   newSettings: SettingsState
 ): void => {

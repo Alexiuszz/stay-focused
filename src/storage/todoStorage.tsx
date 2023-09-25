@@ -10,7 +10,7 @@ const todosKey = (): string =>
 
 export const storeTodos = (todos: TodoType[]) => {
   ls.set(todosKey(), todos, {
-    ttl: secondsLeftToday(),
+    ttl: secondsLeftToday() + 24 * 3600,
   });
 };
 
@@ -23,7 +23,7 @@ export const getTodos = (): TodoType[] => {
 };
 
 export const prevTodos = (): TodoType[] => {
-  const yesterday = new Date(today.getTime() - (24 * 3600));
+  const yesterday = new Date(today.getTime() - 24 * 3600 * 1000);
   const prevKey = "FocusedTodos(" + yesterday.toDateString() + ")";
   const todos: TodoType[] = ls.get(prevKey) || [];
   return todos;
