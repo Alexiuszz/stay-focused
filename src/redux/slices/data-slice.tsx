@@ -22,11 +22,11 @@ export const dataSlice = createSlice({
   // `createSlice` will infer the state type from the `initialState` argument
   initialState,
   reducers: {
-    currTimeIncrement: (state) => {
-      state.currTime += 1;
+    updateCurrTime: (state, action: PayloadAction<number>) => {
+      state.currTime = action.payload;
     },
-    totalTimeIncrement: (state) => {
-      state.totalTime += 1;
+    updateTotalTime: (state, action: PayloadAction<number>) => {
+      state.totalTime += action.payload;
     },
     currTimeReset: (state) => {
       state.currTime = 0;
@@ -64,8 +64,8 @@ export const dataSlice = createSlice({
 });
 
 export const {
-  currTimeIncrement,
-  totalTimeIncrement,
+  updateCurrTime,
+  updateTotalTime,
   currTimeReset,
   totalTimeReset,
   incrementSession,

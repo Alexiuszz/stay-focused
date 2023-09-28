@@ -16,6 +16,7 @@ function Progress({ totalTimeToday }: { totalTimeToday: number }) {
   return (
     <div className="w-11/12 md:2/5 h-80 md:h-full min-w-fit mx-auto">
       <BoardContainer>
+        {/* {totalTimeToday} */}
         {totalTimeToday > dailyGoal ? (
           <p>Well done, you&apos;ve achieved your goal!</p>
         ) : (

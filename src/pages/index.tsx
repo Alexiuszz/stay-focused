@@ -12,7 +12,8 @@ import {
   setBestStreak,
   setCurrStreak,
   takeBreak,
-  totalTimeIncrement,
+  updateCurrTime,
+  updateTotalTime,
 } from "@/redux/slices/data-slice";
 import { useEffect, useState } from "react";
 import {
@@ -26,6 +27,7 @@ import dynamic from "next/dynamic";
 import { differenceInDays, streakEnded } from "@/helpers/utils";
 import { initStorageData } from "../storage/dataStorage";
 import Head from "next/head";
+import { currTime } from "../redux/slices/data-slice";
 
 const Progress = dynamic(() => import("../components/progress"), {
   ssr: false,
@@ -36,9 +38,18 @@ const Todo = dynamic(() => import("../components/todo"), {
 
 export default function Home() {
   const [openPrevTodos, setOpenPrevTodos] = useState<boolean>(false);
-  const { minutes, hours, seconds, isRunning, start, pause, reset } =
-    useStopwatch({ autoStart: false });
+  const {
+    totalSeconds,
+    minutes,
+    hours,
+    seconds,
+    isRunning,
+    start,
+    pause,
+    reset,
+  } = useStopwatch({ autoStart: false });
 
+  const currTimeVal = useAppSelector(currTime);
   const totalTime = useAppSelector((state) => state.data.totalTime);
   const sessions = useAppSelector((state) => state.data.sessions);
   const currStreakVal = useAppSelector(currStreak);
@@ -62,9 +73,13 @@ export default function Home() {
 
   const resetTimer = () => {
     dispatch(takeBreak(false));
+    const temp = currTimeVal;
+    dispatch(updateCurrTime(0));
+    dispatch(updateTotalTime(temp));
     reset(new Date(0), false);
     storeTodayData({
-      totalTime: totalTime,
+      currTime: 0,
+      totalTime: totalTime + currTimeVal,
       sessions: sessions,
       currStreak: currStreakVal,
       bestStreak: bestStreakVal,
@@ -87,9 +102,6 @@ export default function Home() {
     }
     const tempData = GetLatestTempData();
     const diff = differenceInDays(new Date(tempData.key), new Date());
-    console.log("diff", diff);
-    console.log("tempData", tempData);
-    console.log("data", data);
     if (
       tempData.totalTime > 0 &&
       data.currStreak < tempData.currStreak &&
@@ -101,16 +113,32 @@ export default function Home() {
   }, []);
 
   useEffect(() => {
+    if (currTimeVal > 0) {
+      const temp = currTimeVal;
+      dispatch(updateCurrTime(0));
+      dispatch(updateTotalTime(temp));
+      storeTodayData({
+        currTime: 0,
+        totalTime: totalTime,
+        sessions: sessions,
+        currStreak: currStreakVal,
+        bestStreak: bestStreakVal,
+      });
+    }
+  }, []);
+
+  useEffect(() => {
     const data = latestUserData();
     if (data.key !== new Date().toDateString()) {
       storeTodayData(initStorageData);
     }
-  });
+  }, []);
 
   useEffect(() => {
     if (isRunning) {
-      dispatch(totalTimeIncrement());
+      dispatch(updateCurrTime(totalSeconds));
       storeTodayData({
+        currTime: totalSeconds,
         totalTime: totalTime,
         sessions: sessions,
         currStreak: currStreakVal,
@@ -149,6 +177,7 @@ export default function Home() {
             {/* <FontAwesomeIcon icon={faStarOfLife} /> */}
           </div>
           <div className="flex flex-col md:flex-row justify-between w-full max-w-4xl h-fit md:h-80 gap-4">
+            {/* {totalSeconds} */}
             <TimerBoard
               hours={hours}
               minutes={minutes}
@@ -158,7 +187,7 @@ export default function Home() {
               pause={pause}
               resetTimer={resetTimer}
             />
-            <Progress totalTimeToday={totalTime} />
+            <Progress totalTimeToday={totalTime + currTimeVal} />
           </div>
           <div className="flex flex-col md:flex-row justify-between w-full max-w-4xl h-fit gap-4">
             <Todo
@@ -167,7 +196,7 @@ export default function Home() {
               }
               openPrevTodos={openPrevTodos}
             />
-            <ChartBoard totalTime={totalTime} />
+            <ChartBoard totalTime={totalTime + currTimeVal} />
           </div>
         </section>
       </Layout>

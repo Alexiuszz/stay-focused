@@ -1,4 +1,3 @@
-import { SettingsState } from "@/redux/slices/settings-slice";
 import ls from "localstorage-slim";
 import { secondsLeftToday } from "../helpers/utils";
 import { DataState } from "@/redux/slices/data-slice";
@@ -10,46 +9,8 @@ const todayKey = "FocusedData(" + today.toDateString() + ")";
 export const latestData: string = "FocusedData(latestData)";
 export const tempLatest: string = "FocusedData(TempLatest)";
 
-export const storeUserSettings = (
-  newSettings: SettingsState
-): void => {
-  ls.set("Focused(settings)", newSettings);
-};
-
-export const getUserSettings = () => {
-  if (typeof window !== "undefined") {
-    const storedSettings = ls.get("Focused(settings)");
-    if (storedSettings) return storedSettings;
-    else {
-      storeUserSettings({
-        dailyGoal: 6 * 60 * 60,
-        breakDuration: 5 * 60,
-        userName: "User",
-        includeWeekend: true,
-        offDays: [],
-        skipBreaks: false,
-      });
-      return {
-        dailyGoal: 6 * 60 * 60,
-        breakDuration: 5 * 60,
-        userName: "User",
-        includeWeekend: true,
-        offDays: [],
-        skipBreaks: false,
-      };
-    }
-  }
-  return {
-    dailyGoal: 6 * 60 * 60,
-    breakDuration: 5 * 60,
-    userName: "User",
-    includeWeekend: true,
-    offDays: [],
-    skipBreaks: false,
-  };
-};
-
 interface StorageDataType {
+  currTime?: number;
   totalTime: number;
   sessions: number;
   currStreak: number;
@@ -58,6 +19,7 @@ interface StorageDataType {
 }
 
 interface StorageDataReturnType {
+  currTime: number;
   totalTime: number;
   sessions: number;
   currStreak: number;
@@ -73,6 +35,7 @@ interface StorageDataReturnType {
 //   bestStreak: 0,
 // };
 export const initStorageData = {
+  currTime:0,
   totalTime: 0,
   sessions: 0,
   currStreak: 0,
@@ -108,7 +71,7 @@ export const getTodayData = (): DataState => {
     const data: StorageDataReturnType =
       ls.get(todayKey) || initStorageData;
     if (ls.get(todayKey))
-      return { ...data, paused: false, currTime: 0 };
+      return { ...data, paused: false };
   }
   return {
     currTime: 0,
