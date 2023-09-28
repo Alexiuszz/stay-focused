@@ -60,7 +60,7 @@ function Todo({
             setOpenPrevTodos();
             e.stopPropagation();
           }}
-          className="absolute top-4 left-2 w-6 h-6 p-1 flex justify-between cursor-pointer text-sm"
+          className="absolute top-4 left-2 w-fit h-6 p-1 flex justify-between cursor-pointer text-sm"
         >
           <FontAwesomeIcon icon={faClock} />
           {openPrevTodos && (
