@@ -138,12 +138,10 @@ export const last7Data = (): number[] => {
   if (typeof window !== "undefined")
     for (let i = 1; i < 7; i++) {
       const day = new Date(today.getTime() - i * 24 * 3600 * 1000);
-      console.log(day.toDateString());
       const data: StorageDataReturnType =
         ls.get(`FocusedData(${day.toDateString()})`) ||
         initStorageData;
-      timeData = [data.totalTime/60, ...timeData];
+      timeData = [data.totalTime / 60, ...timeData];
     }
-  console.log(timeData);
   return timeData;
 };

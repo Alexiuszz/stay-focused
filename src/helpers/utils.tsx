@@ -41,22 +41,14 @@ export function rotateArray<Type>(arr: Type[], pos: number): Type[] {
       j--;
     }
   }; // suppose  ----->--->
-  reverse(0, arr.length - 1); // reverse   <--<------
-  reverse(0, pos - 1); // reverse first part ---><----
   reverse(pos, arr.length - 1); // reverse second part --->----->
+  reverse(0, pos - 1); // reverse first part ---><----
+  reverse(0, arr.length - 1); // reverse   <--<------
   return arr;
 }
 export const getDays = (): string[] => {
-  const days = [
-    "Sun",
-    "Mon",
-    "Tue",
-    "Wed",
-    "Thur",
-    "Fri",
-    "Sat",
-  ];
+  const days = ["Sun", "Mon", "Tue", "Wed", "Thur", "Fri", "Sat"];
 
   const today = new Date();
-  return rotateArray<string>(days, today.getDay()).reverse();
+  return rotateArray<string>(days, today.getDay()+1);
 };

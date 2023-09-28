@@ -87,12 +87,16 @@ export default function Home() {
     }
     const tempData = GetLatestTempData();
     const diff = differenceInDays(new Date(tempData.key), new Date());
+    console.log("diff", diff);
+    console.log("tempData", tempData);
+    console.log("data", data);
     if (
       tempData.totalTime > 0 &&
-      diff === 1 &&
-      data.currStreak < tempData.currStreak
+      data.currStreak < tempData.currStreak &&
+      data.bestStreak < tempData.bestStreak
     ) {
-      dispatch(setCurrStreak(tempData.currStreak));
+      diff <= 1 && dispatch(setCurrStreak(tempData.currStreak));
+      dispatch(setBestStreak(tempData.bestStreak));
     }
   }, []);
 
