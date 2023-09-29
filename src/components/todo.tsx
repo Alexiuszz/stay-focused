@@ -69,8 +69,8 @@ function Todo({
                 <p>No tasks from yesterday</p>
               )}
               {prevTodosList.map((todo, i) => (
-                <div key={i} className="w-11/12 h-fit flex items-end justify-between">
-                  <p className="text-slate-500 ">{todo.task}</p>
+                <div key={i} className="w-11/12 h-fit px-2 flex items-end justify-between">
+                  <p className="text-white mb-2 ">{todo.task}</p>
                   <div
                     onClick={() => createTodo(todo.task)}
                     className="flex items-center justify-center cursor-pointer p-1 w-6 h-6 text-xs bg-slate-500 rounded-sm shadow-sm shadow-black hover:bg-slate-600"
