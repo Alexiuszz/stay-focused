@@ -38,6 +38,7 @@ const Todo = dynamic(() => import("../components/todo"), {
 
 export default function Home() {
   const [openPrevTodos, setOpenPrevTodos] = useState<boolean>(false);
+  const [openSidePanel, setOpenSidePanel] = useState<boolean>(false);
   const {
     totalSeconds,
     minutes,
@@ -130,6 +131,7 @@ export default function Home() {
   useEffect(() => {
     const data = latestUserData();
     if (data.key !== new Date().toDateString()) {
+      dispatch(setBestStreak(data.bestStreak));
       storeTodayData(initStorageData);
     }
   }, []);
@@ -168,7 +170,17 @@ export default function Home() {
           content="https://stay-focused-nine.vercel.app/logo"
         />
       </Head>
-      <Layout page="home" onClick={() => setOpenPrevTodos(false)}>
+      <Layout
+        page="home"
+        setOpenSidePanel={() =>
+          setOpenSidePanel((prevState) => !prevState)
+        }
+        openSidePanel={openSidePanel}
+        onClick={() => {
+          setOpenSidePanel(false);
+          setOpenPrevTodos(false);
+        }}
+      >
         <section className="X-main mx-auto md:mr-0 w-full md:w-11/12 lg:w-3/4 flex flex-col items-center gap-4">
           <div className="flex w-full h-fit mx-auto md:mx-0">
             <h1 className="text-xl mb-1 ml-4 md:ml-0 ">
