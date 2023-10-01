@@ -28,15 +28,7 @@
   background: #4f667c;
 }
 
-.X-main {
-  height: calc(100vh - 2rem);
-}
 
-@media screen and (max-width: 768px) {
-  .X-main {
-    height: calc(100vh - 4rem);
-  }
-}
 
 .sidePanel {
   width: 150px;

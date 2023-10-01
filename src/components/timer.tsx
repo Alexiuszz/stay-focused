@@ -4,6 +4,8 @@ import { padZero } from "@/helpers/utils";
 import { useTimer } from "react-timer-hook";
 import { useAppDispatch, useAppSelector } from "@/redux/hooks";
 import { takeBreak } from "@/redux/slices/data-slice";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faPen } from "@fortawesome/free-solid-svg-icons";
 
 interface TimerProps {
   minutes: number;
@@ -55,6 +57,15 @@ function TimerBoard({
   return (
     <div className="w-11/12 md:3/5 h-80 md:h-full min-w-fit mx-auto">
       <BoardContainer>
+      <div
+          onClick={(e) => {
+            // setOpenPrevTodos();
+            e.stopPropagation();
+          }}
+          className="absolute top-4 right-2 w-fit h-6 p-1 flex justify-between cursor-pointer text-sm"
+        >
+          <FontAwesomeIcon icon={faPen} />
+          </div>
         {!isRunning && !paused && (
           <h1>Keep track of work sessions with stay-focused</h1>
         )}

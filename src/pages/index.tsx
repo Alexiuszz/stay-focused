@@ -38,7 +38,6 @@ const Todo = dynamic(() => import("../components/todo"), {
 
 export default function Home() {
   const [openPrevTodos, setOpenPrevTodos] = useState<boolean>(false);
-  const [openSidePanel, setOpenSidePanel] = useState<boolean>(false);
   const {
     totalSeconds,
     minutes,
@@ -152,7 +151,7 @@ export default function Home() {
   return (
     <>
       <Head>
-        <title>Stay Focused</title>
+        <title>Focus time</title>
         <link
           rel="canonical"
           href="https://stay-focused-nine.vercel.app/"
@@ -163,7 +162,7 @@ export default function Home() {
           content="Track time spent focused everyday"
           key="desc"
         />
-        <meta property="og:title" content="Stay Focused" />
+        <meta property="og:title" content="Focus time" />
         <meta property="og:description" content="Track your work" />
         <meta
           property="og:image"
@@ -172,23 +171,17 @@ export default function Home() {
       </Head>
       <Layout
         page="home"
-        setOpenSidePanel={() =>
-          setOpenSidePanel((prevState) => !prevState)
-        }
-        openSidePanel={openSidePanel}
         onClick={() => {
-          setOpenSidePanel(false);
           setOpenPrevTodos(false);
         }}
       >
-        <section className="X-main mx-auto md:mr-0 w-full md:w-11/12 lg:w-3/4 flex flex-col items-center gap-4">
-          <div className="flex w-full h-fit mx-auto md:mx-0">
+        <section className="mx-auto mt-8 md:mr-0 w-full md:w-11/12 lg:w-3/4 h-fit flex flex-col items-center gap-4">
+          <div className="flex w-11/12 md:w-full h-fit mx-auto md:mx-0">
             <h1 className="text-xl mb-1 ml-4 md:ml-0 ">
-              Get more done with Stay Focused
+              Track your focus time
             </h1>
-            {/* <FontAwesomeIcon icon={faStarOfLife} /> */}
           </div>
-          <div className="flex flex-col md:flex-row justify-between w-full max-w-4xl h-fit md:h-80 gap-4">
+          <div className="flex flex-col md:flex-row justify-between w-full max-w-4xl  md:h-80 gap-4">
             {/* {totalSeconds} */}
             <TimerBoard
               hours={hours}
