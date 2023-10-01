@@ -53,7 +53,7 @@ function Todo({
   };
 
   return (
-    <div className="w-11/12 mdw-3/5 h-80 md:h-fit mx-auto max-h-72 min-w-fit z-10 ">
+    <div className="w-11/12 mdw-3/5 h-80 md:h-fit mx-auto max-h-72 min-w-fit  ">
       <BoardContainer>
         <div
           onClick={(e) => {

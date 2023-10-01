@@ -86,7 +86,7 @@ function TimerBoard({
           {!isRunning && (
             <div
               onClick={() => startTimer(paused)}
-              className="flex justify-center items-center h-12 px-2  bg-slate-600 shadow-black shadow-sm rounded-lg cursor-pointer hover:bg-slate-700"
+              className="flex justify-center items-center h-12 px-2  bg-slate-600 shadow-black shadow-sm rounded-lg cursor-pointer hover:bg-slate-700 transition-colors duration-200"
             >
               {paused ? "Resume" : "Start"} focus sesson
             </div>

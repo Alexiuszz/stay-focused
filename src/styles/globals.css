@@ -37,3 +37,29 @@
     height: calc(100vh - 4rem);
   }
 }
+
+.sidePanel {
+  width: 150px;
+  transition: width 0.2s;
+}
+
+.menu {
+  left: 0;
+  transition: all 0.2s;
+  border-radius: 0 10px 10px 0;
+}
+
+@media screen and (max-width: 976px) {
+  .sidePanel {
+    width: 0;
+  }
+  .sidePanel.open {
+    width: 150px;
+  }
+
+  .menu.menu-open{
+    left: 150px;
+    transform: scale(-1);
+    border-radius: 10px 0 0 10px;
+  }
+}
