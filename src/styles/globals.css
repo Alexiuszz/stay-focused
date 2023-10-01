@@ -15,21 +15,7 @@
     --background-end-rgb: 0, 0, 0;
   }
 }
-
-.main-container::-webkit-scrollbar {
-  width: 12px;
-}
-.main-container::-webkit-scrollbar-thumb {
-  background-color: #475569;
-  border: 3px solid #2c3b4f;
-  border-radius: 10px;
-}
-.main-container::-webkit-scrollbar-track {
-  background: #4f667c;
-}
-
-
-
+ 
 .sidePanel {
   width: 150px;
   transition: width 0.2s;
