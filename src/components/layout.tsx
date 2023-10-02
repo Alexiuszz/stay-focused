@@ -18,7 +18,7 @@ function Layout({
         setOpenSidePanel(false);
         onClick();
       }}
-      className="main-container overflow-x-hidden font-TT subpixel-antialiased text-sm bg-slate-100 dark:bg-slate-900  text-fa text-slate-900 dark:text-slate-300 flex flex-col justify-center items-end pr-0 md:pr-12 "
+      className="min-h-[100vh] overflow-x-hidden font-TT subpixel-antialiased text-sm bg-slate-100 dark:bg-slate-900  text-fa text-slate-900 dark:text-slate-300 flex flex-col justify-center items-end pr-0 md:pr-12 "
     >
       <style jsx global>{`
         body::-webkit-scrollbar {
