@@ -175,7 +175,7 @@ export default function Home() {
           setOpenPrevTodos(false);
         }}
       >
-        <section className="mx-auto mt-8 md:mr-0 w-full md:w-11/12 lg:w-3/4 h-fit flex flex-col items-center gap-4">
+        <section className="mx-auto mt-8 mr-16 w-full md:w-11/12 lg:w-3/4 h-fit flex flex-col items-center gap-4">
           <div className="flex w-11/12 md:w-full h-fit mx-auto md:mx-0">
             <h1 className="text-xl mb-1 ml-4 md:ml-0 ">
               Track your focus time
