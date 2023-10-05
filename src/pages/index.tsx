@@ -129,6 +129,16 @@ export default function Home() {
   }, []);
 
   useEffect(() => {
+    storeTodayData({
+      currTime: currTimeVal,
+      totalTime: totalTime,
+      sessions: sessions,
+      currStreak: currStreakVal,
+      bestStreak: bestStreakVal,
+    });
+  }, [totalTime]);
+
+  useEffect(() => {
     const data = latestUserData();
     if (data.key !== new Date().toDateString()) {
       dispatch(setBestStreak(data.bestStreak));
