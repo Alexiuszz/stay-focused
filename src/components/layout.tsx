@@ -6,14 +6,14 @@ import TimerSettings from "./timer-settings";
 
 function Layout({
   children,
-  isTimerSettingOpen,
-  closeTimerSettings,
+  isTimerSettingOpen = false,
+  closeTimerSettings = () => {},
   page,
   onClick,
 }: {
   children: ReactNode;
-  isTimerSettingOpen: boolean;
-  closeTimerSettings: () => void;
+  isTimerSettingOpen?: boolean;
+  closeTimerSettings?: () => void;
   page: string;
   onClick: () => void;
 }) {
