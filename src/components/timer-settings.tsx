@@ -134,7 +134,7 @@ function TimerSettings({
 
       <button
         type="button"
-        className="inline-flex justify-center rounded-md border border-transparent bg-blue-100 px-4 py-2 text-sm font-medium text-blue-900 hover:bg-blue-200 focus:outline-none focus-visible:ring-2 focus-visible:ring-blue-500 focus-visible:ring-offset-2"
+        className="inline-flex justify-center rounded-md border border-transparent bg-slate-200 mt-4 px-4 py-2 text-sm font-medium text-slate-800 hover:bg-slate-400 hover:text-white focus:outline-none focus-visible:ring-2 focus-visible:ring-cyan-100 focus-visible:ring-offset-2 transition-colors duration-200"
         onClick={saveSettings}
       >
         save
