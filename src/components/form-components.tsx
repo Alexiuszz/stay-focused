@@ -1,91 +1,56 @@
-import { Fragment } from "react";
+import { ChangeEvent, Fragment } from "react";
 import { Listbox, Transition } from "@headlessui/react";
 import {
   CheckIcon,
   ChevronUpDownIcon,
 } from "@heroicons/react/20/solid";
 
-interface SettingsInputType {
+interface InputType {
   value: string | number;
-  onChange: (val: string | number) => void;
+  onChange: (e: ChangeEvent) => void;
+}
+interface SelectInputType {
+  value: number;
+  label: string;
+  onChange: (val: number) => void | ((e: ChangeEvent) => void);
   selectItems?: { text: string; time: number }[];
 }
 
-const goalValues = [
-  {
-    time: 1 * 60 * 60,
-    text: "1 hour",
-  },
-  {
-    time: 2 * 60 * 60,
-    text: "2 hours",
-  },
-  {
-    time: 3 * 60 * 60,
-    text: "3 hours",
-  },
-  {
-    time: 4 * 60 * 60,
-    text: "4 hours",
-  },
-  {
-    time: 5 * 60 * 60,
-    text: "5 hours",
-  },
-  {
-    time: 6 * 60 * 60,
-    text: "6 hours",
-  },
-  {
-    time: 7 * 60 * 60,
-    text: "7 hours",
-  },
-  {
-    time: 8 * 60 * 60,
-    text: "8 hours",
-  },
-];
-const breakValues = [
-  {
-    time: 10 * 60,
-    text: "10 minutes",
-  },
-  {
-    time: 15 * 60,
-    text: "15 minutes",
-  },
-  {
-    time: 30 * 60,
-    text: "30 minutes",
-  },
-  {
-    time: 1 * 60 * 60,
-    text: "1 hour",
-  },
-];
 
-export const BreakSetting = ({
-  value,
-  onChange,
-}: SettingsInputType) => {
+function GetTimeText(
+  arr: { time: number; text: string }[],
+  targetValue: number
+): string {
+  for (const obj of arr) {
+    if (Object.values(obj).includes(targetValue)) {
+      return obj["text"]; // Return the value associated with "value1"
+    }
+  }
+  return "10 minutes"; // Return null if not found
+}
+
+
+export const TextInput = ({ value, onChange }: InputType) => {
   return (
-    <ListMenu
-      value={value}
-      onChange={onChange}
-      selectItems={breakValues}
-    />
-  );
-};
-export const GoalSetting = ({
-  value,
-  onChange,
-}: SettingsInputType) => {
-  return (
-    <ListMenu
-      value={value}
-      onChange={onChange}
-      selectItems={goalValues}
-    />
+    // <div className="mt-10 grid grid-cols-1 gap-x-6 gap-y-8 sm:grid-cols-6">
+    <div className="sm:col-span-3">
+      <label
+        htmlFor="user-name"
+        className="block text-sm font-medium leading-6 text-gray-900"
+      >
+        User name
+      </label>
+      <div className="mt-2">
+        <input
+          type="text"
+          name="user-name"
+          id="user-name"
+          value={value}
+          onChange={(e) => onChange(e)}
+          className="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
+        />
+      </div>
+    </div>
   );
 };
 
@@ -94,20 +59,24 @@ function classNames(...classes: string[]) {
 }
 export const ListMenu = ({
   value,
+  label,
   onChange,
   selectItems = [],
-}: SettingsInputType) => {
+}: SelectInputType) => {
+  console.log("time", value, "item", selectItems);
   return (
     <Listbox value={value} onChange={(e) => onChange(e)}>
       {({ open }) => (
         <>
           <Listbox.Label className="block text-sm font-medium leading-6 text-gray-900">
-            Assigned to
+            {label}
           </Listbox.Label>
           <div className="relative mt-2">
             <Listbox.Button className="relative w-full cursor-default rounded-md bg-white py-1.5 pl-3 pr-10 text-left text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 focus:outline-none focus:ring-2 focus:ring-indigo-500 sm:text-sm sm:leading-6">
               <span className="flex items-center">
-                <span className="ml-3 block truncate">{value}</span>
+                <span className="ml-3 block truncate">
+                  {GetTimeText(selectItems, value)}
+                </span>
               </span>
               <span className="pointer-events-none absolute inset-y-0 right-0 ml-3 flex items-center pr-2">
                 <ChevronUpDownIcon

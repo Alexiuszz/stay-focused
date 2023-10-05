@@ -15,7 +15,7 @@ export const getUserSettings = () => {
     else {
       storeUserSettings({
         dailyGoal: 6 * 60 * 60,
-        breakDuration: 5 * 60,
+        breakDuration: 10 * 60,
         userName: "User",
         includeWeekend: true,
         offDays: [],
@@ -23,7 +23,7 @@ export const getUserSettings = () => {
       });
       return {
         dailyGoal: 6 * 60 * 60,
-        breakDuration: 5 * 60,
+        breakDuration: 10 * 60,
         userName: "User",
         includeWeekend: true,
         offDays: [],

@@ -42,5 +42,9 @@ export const { setDailyGoal, setBreakDuration, setUserName } =
 // Other code such as selectors can use the imported `RootState` type
 export const dailyGoal = (state: RootState) =>
   state.settings.dailyGoal;
+export const breakDuration = (state: RootState) =>
+  state.settings.breakDuration;
+export const userName = (state: RootState) =>
+  state.settings.userName;
 
 export default settingsSlice.reducer;

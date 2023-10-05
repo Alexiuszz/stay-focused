@@ -2,13 +2,19 @@ import React, { ReactNode, useState } from "react";
 import NavBar from "./nav";
 import SidePanel from "./side-panel";
 import Footer from "./footer";
+import TimerSettings from "./timer-settings";
 
 function Layout({
   children,
+  isTimerSettingOpen,
+  closeTimerSettings,
+  page,
   onClick,
 }: {
   children: ReactNode;
-  page?: string;
+  isTimerSettingOpen: boolean;
+  closeTimerSettings: () => void;
+  page: string;
   onClick: () => void;
 }) {
   const [openSidePanel, setOpenSidePanel] = useState<boolean>(false);
@@ -38,6 +44,12 @@ function Layout({
         open={openSidePanel}
         setOpen={() => setOpenSidePanel((prevState) => !prevState)}
       />
+      {page === "home" && (
+        <TimerSettings
+          isOpen={isTimerSettingOpen}
+          closeModal={closeTimerSettings}
+        />
+      )}
       {children}
       <Footer />
     </main>

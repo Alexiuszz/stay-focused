@@ -15,6 +15,7 @@ interface TimerProps {
   startTimer: (paused?: boolean) => void;
   pause: () => void;
   resetTimer: () => void;
+  OpenTimerSettings: () => void;
 }
 
 function TimerBoard({
@@ -25,6 +26,7 @@ function TimerBoard({
   minutes,
   seconds,
   isRunning,
+  OpenTimerSettings,
 }: TimerProps) {
   const paused = useAppSelector((state) => state.data.paused);
   const skipBreaks = useAppSelector(
@@ -57,15 +59,15 @@ function TimerBoard({
   return (
     <div className="w-11/12 md:3/5 h-80 md:h-full min-w-fit mx-auto">
       <BoardContainer>
-      <div
+        <div
           onClick={(e) => {
-            // setOpenPrevTodos();
+            OpenTimerSettings();
             e.stopPropagation();
           }}
           className="absolute top-4 right-2 w-fit h-6 p-1 flex justify-between cursor-pointer text-sm"
         >
           <FontAwesomeIcon icon={faPen} />
-          </div>
+        </div>
         {!isRunning && !paused && (
           <h1>Keep track of work sessions with stay-focused</h1>
         )}
