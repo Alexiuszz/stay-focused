@@ -18,7 +18,7 @@ const RoundMeter = ({
   // Calculate the path of the meter's gauge
   const radius = (size - strokeWidth) / 2;
   const circumference = 2 * Math.PI * radius;
-  const offset = ((100 - percentage) / 100) * circumference;
+  const offset = percentage<100?((100 - percentage) / 100) * circumference: 0;
 
   return (
     <svg width={size} height={size} viewBox={`0 0 ${size} ${size}`}>
