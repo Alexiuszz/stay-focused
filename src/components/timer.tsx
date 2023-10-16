@@ -6,6 +6,7 @@ import { useAppDispatch, useAppSelector } from "@/redux/hooks";
 import { takeBreak } from "@/redux/slices/data-slice";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faPen } from "@fortawesome/free-solid-svg-icons";
+import { breakDuration } from "../redux/slices/settings-slice";
 
 interface TimerProps {
   minutes: number;
@@ -28,14 +29,15 @@ function TimerBoard({
   isRunning,
   OpenTimerSettings,
 }: TimerProps) {
+  const dispatch = useAppDispatch();
   const paused = useAppSelector((state) => state.data.paused);
   const skipBreaks = useAppSelector(
     (state) => state.settings.skipBreaks
   );
-  const dispatch = useAppDispatch();
+  const breakDurationVal = useAppSelector(breakDuration);
 
   const time = new Date();
-  time.setSeconds(time.getSeconds() + 600);
+  time.setSeconds(time.getSeconds() + breakDurationVal);
   const timeout = useTimer({
     expiryTimestamp: time,
     onExpire: resetTimer,
