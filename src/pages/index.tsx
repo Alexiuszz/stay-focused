@@ -156,6 +156,17 @@ export default function Home() {
         currStreak: currStreakVal,
         bestStreak: bestStreakVal,
       });
+
+      const data = latestUserData();
+      const nextSecondDate = new Date();
+      nextSecondDate.setSeconds(nextSecondDate.getSeconds() + 1);
+
+      if (data.key !== nextSecondDate.toDateString()) {
+        resetTimer();
+        setTimeout(() => {
+          startTimer();
+        }, 2000);
+      }
     }
   }, [seconds]);
 
